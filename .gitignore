@@ -1,0 +1,4 @@
+out/
+__pycache__/
+*.png
+!games/*/art/raw/*.png
