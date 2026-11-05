@@ -319,6 +319,8 @@ function checkTheme(t, i, { files, sprites, characters, kinds }) {
       onFloor(a.spot, `activities.${k}.spot`);
       if (a.face !== undefined && !['left', 'right'].includes(a.face)) e.push(`${aat}.face must be left or right`);
       if (a.pose !== undefined && a.pose !== 'tucked') e.push(`${aat}.pose must be "tucked"`);
+      // lying down needs the place to lie: without `lie` she would lie where she stands, on the floor beside the bed
+      if (a.pose === 'tucked' && a.lie === undefined) e.push(`${aat}: pose "tucked" needs lie [x, y] (where her feet go on the bed)`);
       if (a.anim !== undefined && !USE_ANIMS.includes(a.anim)) e.push(`${aat}.anim "${a.anim}"`);
       if (a.bubble !== undefined && !ptIn(a.bubble, world)) e.push(`${aat}.bubble must be [x, y] inside the world`);
       if (a.props !== undefined && !Array.isArray(a.props)) e.push(`${aat}.props must be a list`);

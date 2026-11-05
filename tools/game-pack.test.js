@@ -44,6 +44,7 @@ test('room@1 refuses broken packs', () => {
   fails((m) => { m.activities.sleep.deltas.energy = 80; }, /deltas\.energy must be/);
   fails((m) => { m.activities.sleep.deltas.affection = 5; }, /deltas\.affection: only/);
   fails((m) => { m.activities.work.seconds = 2; }, /seconds must be 5–600/);
+  fails((m) => { delete room(m).activities.sleep.lie; }, /pose "tucked" needs lie/); // she would lie on the floor beside the bed
   fails((m) => { room(m).activities.sleep.deltas = { energy: 40 }; }, /a theme cannot change the numbers/);
   fails((m) => { room(m).images.room = 'claude-room.webp'; }, /must start with "dafeiyu-"/);
   fails((m) => { room(m).images.room = 'dafeiyu-other.webp'; }, /dafeiyu-other\.webp is missing/);

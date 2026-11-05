@@ -234,6 +234,7 @@
           "spot": [215, 478],
           "face": "right",
           "pose": "tucked",
+          "lie": [232, 392],
           "props": [
             {
               "fx": "dim",
@@ -271,6 +272,7 @@
           "at": "desk",
           "spot": [468, 488],
           "face": "right",
+          "bubble": [430, 262],
           "props": [
             {
               "fx": "screen-type",
@@ -380,6 +382,7 @@
           "at": "tv",
           "spot": [846, 508],
           "face": "right",
+          "bubble": [865, 240],
           "props": [
             {
               "fx": "frames",
