@@ -1,0 +1,162 @@
+{
+ "static_diff_vs_base_off(0-255)": {
+  "dafeiyu-phone-off": {
+   "vs": "base-off",
+   "raw": {
+    "window": 7.49,
+    "left-wall": 4.61,
+    "shelf-wall": 4.36
+   },
+   "aligned": {
+    "window": 7.24,
+    "left-wall": 4.63,
+    "shelf-wall": 4.78
+   },
+   "used": "raw"
+  },
+  "dafeiyu-phone-lit": {
+   "vs": "base-lit",
+   "raw": {
+    "window": 6.03,
+    "left-wall": 4.01,
+    "shelf-wall": 3.71
+   },
+   "aligned": {
+    "window": 6.45,
+    "left-wall": 4.01,
+    "shelf-wall": 3.82
+   },
+   "used": "raw"
+  },
+  "dafeiyu-work-off": {
+   "vs": "base-off",
+   "raw": {
+    "window": 4.66,
+    "left-wall": 3.74,
+    "shelf-wall": 3.67
+   },
+   "aligned": {
+    "window": 5.51,
+    "left-wall": 3.85,
+    "shelf-wall": 6.61
+   },
+   "used": "raw"
+  },
+  "dafeiyu-work-lit": {
+   "vs": "base-lit",
+   "raw": {
+    "window": 4.68,
+    "left-wall": 3.96,
+    "shelf-wall": 6.82
+   },
+   "aligned": {
+    "window": 5.42,
+    "left-wall": 3.96,
+    "shelf-wall": 9.0
+   },
+   "used": "raw"
+  },
+  "dafeiyu-sleep-off": {
+   "vs": "base-off",
+   "raw": {
+    "window": 7.52,
+    "left-wall": 6.11,
+    "shelf-wall": 5.05
+   },
+   "aligned": {
+    "window": 7.16,
+    "left-wall": 6.08,
+    "shelf-wall": 4.88
+   },
+   "used": "aligned"
+  },
+  "dafeiyu-sleep-lit": {
+   "vs": "base-lit",
+   "raw": {
+    "window": 5.94,
+    "left-wall": 5.46,
+    "shelf-wall": 4.16
+   },
+   "aligned": {
+    "window": 6.97,
+    "left-wall": 5.46,
+    "shelf-wall": 4.92
+   },
+   "used": "raw"
+  }
+ },
+ "lighting": {
+  "base": {
+   "lamp-area off": {
+    "luma": 45.0,
+    "warm(R-B)": -70.0
+   },
+   "lamp-area lit": {
+    "luma": 86.4,
+    "warm(R-B)": 60.6
+   },
+   "bed-area off": {
+    "luma": 75.4,
+    "warm(R-B)": -143.0
+   },
+   "bed-area lit": {
+    "luma": 76.1,
+    "warm(R-B)": -132.1
+   }
+  },
+  "phone": {
+   "lamp-area off": {
+    "luma": 43.3,
+    "warm(R-B)": -74.7
+   },
+   "lamp-area lit": {
+    "luma": 89.0,
+    "warm(R-B)": 70.0
+   },
+   "bed-area off": {
+    "luma": 71.1,
+    "warm(R-B)": -136.4
+   },
+   "bed-area lit": {
+    "luma": 74.1,
+    "warm(R-B)": -113.3
+   }
+  },
+  "work": {
+   "lamp-area off": {
+    "luma": 57.3,
+    "warm(R-B)": -91.2
+   },
+   "lamp-area lit": {
+    "luma": 89.6,
+    "warm(R-B)": 35.3
+   },
+   "bed-area off": {
+    "luma": 77.0,
+    "warm(R-B)": -150.1
+   },
+   "bed-area lit": {
+    "luma": 77.9,
+    "warm(R-B)": -139.3
+   }
+  },
+  "sleep": {
+   "lamp-area off": {
+    "luma": 46.3,
+    "warm(R-B)": -79.1
+   },
+   "lamp-area lit": {
+    "luma": 89.7,
+    "warm(R-B)": 66.9
+   },
+   "bed-area off": {
+    "luma": 76.7,
+    "warm(R-B)": -152.9
+   },
+   "bed-area lit": {
+    "luma": 78.7,
+    "warm(R-B)": -134.0
+   }
+  }
+ }
+}
