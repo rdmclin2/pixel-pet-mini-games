@@ -5,6 +5,7 @@
 | 游戏 | 版本 | 说明 |
 | --- | --- | --- |
 | [像素小院](games/pixel-yard) | 见 [`catalog.json`](catalog.json) | 一座漂在空中的等距像素小院：她自己逛、种菜、摘浆果、抓萤火虫；时段和天气可调；每天三件小事，完成加好感 |
+| [她的房间](games/her-room) | 1.0.0（需要应用 0.27.0，引擎 `room@1`） | 每位角色一间自己风格的房间：陪她睡觉、工作、看手机、听音乐、打游戏。本版开放大肥鱼的「鲸鱼女仆的蓝色小屋」，另外四间即将开放 |
 
 ![像素小院](games/pixel-yard/cover.webp)
 
@@ -22,8 +23,10 @@ games/<id>/
   CHANGELOG.md     每个版本的更新说明（商店的「有更新」里显示最新一节）
 catalog.json       商店目录：应用从这里得知有哪些游戏、最新版本、安装包大小和 sha256
 scripts/           build.js（打包）· publish.js（上传 CDN）· game_sprites.py（切图）· generate.sh（生成原图）
-tools/game-pack.js 小游戏包格式校验（与应用一致）
+tools/game-pack.js 小游戏包格式校验（与应用一致）：node tools/game-pack.js games/<id>
 ```
+
+「她的房间」（`room@1`）的包按主题给文件名加前缀（`dafeiyu-room.webp`、`dafeiyu-atlas.webp`、`dafeiyu-sprites.json`），一个主题一套；`layout.json` 用 `sets` 列出每套，见 `scripts/game_sprites.py` 开头的说明。格式见应用仓库的 `docs/her-room-design.md`。
 
 ## 改游戏、发新版本
 
@@ -46,8 +49,8 @@ tools/game-pack.js 小游戏包格式校验（与应用一致）
 
 ## 美术
 
-美术由 GPT Image（gpt-image-2.5）生成：`scripts/generate.sh games/pixel-yard` 按 `art/prompts.json` 一张张生成（需要已登录的 `lh`），`scripts/game_sprites.py find <原图>` 列出图上的精灵，`layout.json` 给它们命名、定框和缩放，`build` 切图打图集。Python 脚本需要 Pillow 和 numpy。
+美术由 GPT Image（gpt-image-2.5）生成：`scripts/generate.sh games/pixel-yard` 按 `art/prompts.json` 一张张生成（需要已登录的 `lh`），`scripts/game_sprites.py find <原图>` 列出图上的精灵，`layout.json` 给它们命名、定框和缩放，`build` 切图打图集。Python 脚本需要 Pillow 和 numpy。切图后图集里还留着品红像素时，`build` 失败退出。
 
 ## 许可
 
-MIT（见 [LICENSE](LICENSE)）。美术是 AI 生成的原创图，不来自任何现有游戏。
+MIT（见 [LICENSE](LICENSE)）。美术是 AI 生成的原创图，不来自任何现有游戏。画着角色的图（「她的房间」的封面）沿用角色的许可 CC BY-NC-SA 4.0，见 [NOTICE.md](NOTICE.md)。

@@ -37,14 +37,9 @@ const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 
 // the folder must be exactly what the app accepts: a manifest that validates, and only the files it names
 function checkPack(dir, id) {
-  const m = readJson(path.join(dir, 'manifest.json'));
-  if (m.id !== id) throw new Error(`${id}: manifest id is "${m.id}"`);
-  const files = fs.readdirSync(dir);
-  const sprites = m.sprites ? readJson(path.join(dir, m.sprites)) : null;
-  const errors = GP.validateManifest(m, { files, sprites });
+  const { manifest: m, errors } = GP.checkFolder(dir);
+  if (m && m.id !== id) throw new Error(`${id}: manifest id is "${m.id}"`);
   if (errors.length) throw new Error(`${id}: ${errors.join('; ')}`);
-  const named = new Set(['manifest.json', ...Object.values(m.images || {}), ...(m.sprites ? [m.sprites] : [])]);
-  for (const f of files) if (!named.has(f)) throw new Error(`${id}: pack/${f} is not named by the manifest (the app refuses extra files)`);
   return m;
 }
 

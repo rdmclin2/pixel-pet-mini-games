@@ -1,0 +1,321 @@
+{
+ "sets": [
+  {
+   "prefix": "dafeiyu-",
+   "background": {
+    "sheet": "dafeiyu-room",
+    "scale": 0.5,
+    "key": "none",
+    "out": "room"
+   },
+   "sprites": {
+    "bed": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      40,
+      68,
+      912,
+      628
+     ],
+     "scale": 0.28
+    },
+    "bed-front": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      1048,
+      300,
+      472,
+      396
+     ],
+     "scale": 0.2,
+     "pad": [
+      159,
+      0,
+      2,
+      0
+     ]
+    },
+    "nightstand": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      1708,
+      268,
+      272,
+      428
+     ],
+     "scale": 0.28
+    },
+    "desk": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      40,
+      804,
+      644,
+      652
+     ],
+     "scale": 0.28
+    },
+    "record-cabinet": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      796,
+      844,
+      560,
+      576
+     ],
+     "scale": 0.28
+    },
+    "tv-cabinet": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      1472,
+      824,
+      532,
+      596
+     ],
+     "scale": 0.28
+    },
+    "whale-beanbag": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      64,
+      1548,
+      808,
+      420
+     ],
+     "scale": 0.16
+    },
+    "desk-lamp-on": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      1076,
+      1656,
+      228,
+      256
+     ],
+     "scale": 0.21
+    },
+    "whale-plush": {
+     "sheet": "dafeiyu-furniture",
+     "box": [
+      1580,
+      1704,
+      412,
+      232
+     ],
+     "scale": 0.2
+    },
+    "phone-on-table": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      88,
+      148,
+      296,
+      352
+     ],
+     "scale": 0.08
+    },
+    "phone-lit": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      628,
+      116,
+      300,
+      388
+     ],
+     "scale": 0.08
+    },
+    "record-disc": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1096,
+      152,
+      356,
+      352
+     ],
+     "scale": 0.157
+    },
+    "controller": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1564,
+      216,
+      416,
+      272
+     ],
+     "scale": 0.075
+    },
+    "quilt": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      28,
+      712,
+      884,
+      280
+     ],
+     "scale": 0.21
+    },
+    "note1": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1020,
+      704,
+      188,
+      256
+     ],
+     "scale": 0.08
+    },
+    "note2": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1316,
+      712,
+      228,
+      248
+     ],
+     "scale": 0.08
+    },
+    "note3": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1736,
+      700,
+      216,
+      260
+     ],
+     "scale": 0.08
+    },
+    "z1": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      156,
+      1244,
+      156,
+      156
+     ],
+     "scale": 0.09
+    },
+    "z2": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      640,
+      1180,
+      252,
+      240
+     ],
+     "scale": 0.08
+    },
+    "heart": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1160,
+      1212,
+      260,
+      216
+     ],
+     "scale": 0.07
+    },
+    "star": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1664,
+      1156,
+      268,
+      276
+     ],
+     "scale": 0.07
+    },
+    "cocoa": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      92,
+      1532,
+      356,
+      444
+     ],
+     "scale": 0.045
+    },
+    "bow": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      656,
+      1700,
+      224,
+      208
+     ],
+     "scale": 0.07
+    },
+    "shell": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1172,
+      1680,
+      268,
+      244
+     ],
+     "scale": 0.07
+    },
+    "sparkle": {
+     "sheet": "dafeiyu-props",
+     "box": [
+      1716,
+      1700,
+      172,
+      192
+     ],
+     "scale": 0.08
+    },
+    "tv-1": {
+     "sheet": "dafeiyu-screens",
+     "box": [
+      16,
+      57,
+      361,
+      251
+     ],
+     "scale": 0.228
+    },
+    "tv-2": {
+     "sheet": "dafeiyu-screens",
+     "box": [
+      397,
+      57,
+      361,
+      251
+     ],
+     "scale": 0.228
+    },
+    "tv-3": {
+     "sheet": "dafeiyu-screens",
+     "box": [
+      778,
+      57,
+      361,
+      251
+     ],
+     "scale": 0.228
+    },
+    "tv-4": {
+     "sheet": "dafeiyu-screens",
+     "box": [
+      1160,
+      57,
+      360,
+      251
+     ],
+     "scale": 0.228
+    },
+    "monitor-bg": {
+     "sheet": "dafeiyu-screens",
+     "box": [
+      544,
+      336,
+      448,
+      268
+     ],
+     "scale": 0.12
+    }
+   }
+  }
+ ]
+}
