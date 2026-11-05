@@ -18,6 +18,8 @@
 //   room@1 (像素房间)  { defaultTheme, activities: { <kind>: { label, verb, anim, seconds, deltas, needs? } },
 //                     themes: [{ id, character, status: 'open' | 'soon', name, blurb, motifs, palette, …open fields }],
 //                     items, quests, lines }  — docs/her-room-design.md §1 in the app repository
+//   illustrated-room@1 (她的房间)  { defaultRoom, activities, rooms: [{ id, character, status, name, states, screens, … }],
+//                     quests }  — tools/illustrated-room-pack.js (a copy of the app's src/core/illustrated-room-pack.js)
 //   <files>         the pictures (.webp / .png) and the sprites indexes (.json) named there; nothing else
 //
 // packFiles(m) lists every file a manifest names (the store refuses any other file in the folder) and
@@ -25,7 +27,9 @@
 // room: { <file>: index }).
 //
 // Electron-free and DOM-free (main, the build script and the tests require() it).
-const ENGINES = ['yard@1', 'room@1'];
+const Illustrated = require('./illustrated-room-pack');
+
+const ENGINES = ['yard@1', 'room@1', 'illustrated-room@1'];
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,63}$/;
 const FILE_RE = /^[a-z0-9][a-z0-9._-]{0,63}\.(webp|png|json)$/;
 const USE_ANIMS = ['idle', 'sit', 'play', 'pat', 'look', 'happy', 'eat', 'sleep', 'think', 'lookAround'];
@@ -68,11 +72,13 @@ const walkable = (q, walk) => inPoly(q, walk.area) && !(walk.blocked || []).some
 function spriteFiles(m) {
   if (!m || typeof m !== 'object') return [];
   if (m.engine === 'room@1') return (Array.isArray(m.themes) ? m.themes : []).map((t) => t && t.sprites).filter((f) => typeof f === 'string');
+  if (m.engine === 'illustrated-room@1') return Illustrated.spriteFiles(m);
   return typeof m.sprites === 'string' ? [m.sprites] : [];
 }
 
 function packFiles(m) {
   if (!m || typeof m !== 'object') return [];
+  if (m.engine === 'illustrated-room@1') return Illustrated.namedFiles(m);
   if (m.engine === 'room@1') {
     const out = [];
     for (const t of Array.isArray(m.themes) ? m.themes : []) {
@@ -96,6 +102,7 @@ function validateManifest(m, opts = {}) {
   if (!ID_RE.test(String(m.id || ''))) e.push('id must be 3–64 of a-z 0-9 -');
   if (typeof m.name !== 'string' || !m.name.trim()) e.push('name is missing');
   if (typeof m.version !== 'string' || !/^\d+\.\d+\.\d+$/.test(m.version)) e.push('version must be x.y.z');
+  if (m.engine === 'illustrated-room@1') return e.concat(Illustrated.validateIllustratedRoom(m, { files: opts.files || null, sprites: opts.sprites || null, fileRe: FILE_RE }));
   if (m.engine === 'room@1') return e.concat(validateRoom(m, opts));
   return e.concat(validateYard(m, opts));
 }
@@ -388,7 +395,7 @@ function checkFolder(dir) {
   if (!m) return { manifest: null, files: [], errors: ['manifest.json is missing or not JSON'] };
   const files = fs.readdirSync(dir);
   const sheets = spriteFiles(m);
-  const sprites = m.engine === 'room@1' ? Object.fromEntries(sheets.filter((f) => files.includes(f)).map((f) => [f, read(f)]).filter(([, v]) => v)) : (sheets[0] ? read(sheets[0]) : null);
+  const sprites = ['room@1', 'illustrated-room@1'].includes(m.engine) ? Object.fromEntries(sheets.filter((f) => files.includes(f)).map((f) => [f, read(f)]).filter(([, v]) => v)) : (sheets[0] ? read(sheets[0]) : null);
   const errors = validateManifest(m, { files, sprites, bytes: fs.statSync(path.join(dir, 'manifest.json')).size });
   const named = new Set(['manifest.json', ...packFiles(m)]);
   for (const f of files) {
@@ -421,6 +428,13 @@ if (require.main === module) {
     }
     const bytes = files.reduce((n, f) => n + fs.statSync(path.join(dir, f)).size, 0);
     console.log(`ok   ${dir}: ${m.id} ${m.version} (${m.engine}), ${files.length} files, ${bytes} bytes`);
+    if (m.engine === 'illustrated-room@1') {
+      for (const r of m.rooms) {
+        if (r.status !== 'open') { console.log(`     room ${r.id.padEnd(8)} ${r.status}  ${r.name}`); continue; }
+        console.log(`     room ${r.id.padEnd(8)} open  ${r.name}  default ${r.defaultState}`);
+        for (const [k, st] of Object.entries(r.states)) console.log(`       ${k.padEnd(10)} ${String(st.activity || 'transient').padEnd(9)} ${st.images.off} / ${st.images.lit || '-'}  screens: ${Object.entries(st.screens || {}).map(([id, c]) => `${id}=${c.content}`).join(' ') || '-'}  blink: ${st.blink ? 'yes' : 'no'}`);
+      }
+    }
     if (m.engine === 'room@1') {
       for (const t of m.themes) {
         const extra = t.status === 'open' ? `  furniture ${t.furniture.length}, activities ${Object.keys(t.activities).join('/')}, outfit ${t.outfit || '-'}` : '';
