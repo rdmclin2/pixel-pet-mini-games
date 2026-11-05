@@ -18,7 +18,7 @@ and writes <pack-dir>/terrain.webp, <pack-dir>/atlas.webp (every sprite, shelf-p
 <pack-dir>/sprites.json ({ name: { x, y, w, h } } in atlas px). Scaling is a box filter (no blur from
 over-sampling), the alpha is cut hard at 50% and magenta left on the edges is pulled back to the neighbours.
 
-A game with several sets of pictures (她的房间: one per room theme) lists them under "sets"; each set is a layout
+A game with several sets of pictures (像素房间: one per room theme) lists them under "sets"; each set is a layout
 like the one above plus a file-name prefix, and may have an opaque "background" instead of (or with) a terrain:
 
 Any sprite may add "pad": [left, top, right, bottom] (transparent px after scaling), e.g. a bed's foot board

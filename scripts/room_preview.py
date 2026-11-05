@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""她的房间 (room@1) art preview: stills of an open theme, to check the art and the coordinates in the manifest.
+"""像素房间 (room@1) art preview: stills of an open theme, to check the art and the coordinates in the manifest.
 
-  python3 scripts/room_preview.py games/her-room/pack <pet sheet.webp> <pet pack.json> <out-dir> [theme]
+  python3 scripts/room_preview.py games/pixel-room/pack <pet sheet.webp> <pet pack.json> <out-dir> [theme]
 
 Composes the room (background, flat and sorted furniture, the activity's props) with the room owner drawn from
 her pixel pack (for 大肥鱼: the app's src/renderer/packs/dafeiyu-pixel, sheets/daily.webp = her maid dress), once

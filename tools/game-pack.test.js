@@ -1,5 +1,5 @@
 'use strict';
-// node --test tools/   — the format check (tools/game-pack.js) on the real packs and on broken copies of 她的房间
+// node --test tools/   — the format check (tools/game-pack.js) on the real packs and on broken copies of 像素房间
 const test = require('node:test');
 const assert = require('node:assert');
 const fs = require('node:fs');
@@ -7,7 +7,7 @@ const path = require('node:path');
 const GP = require('./game-pack');
 
 const ROOT = path.join(__dirname, '..');
-const HER = path.join(ROOT, 'games', 'her-room', 'pack');
+const HER = path.join(ROOT, 'games', 'pixel-room', 'pack');
 const read = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const base = () => read(path.join(HER, 'manifest.json'));
 const files = fs.readdirSync(HER);
@@ -22,10 +22,10 @@ const fails = (edit, re) => {
 const room = (m) => m.themes.find((t) => t.id === 'dafeiyu');
 
 test('both packs in the repository pass', () => {
-  for (const id of ['pixel-yard', 'her-room']) assert.deepStrictEqual(GP.checkFolder(path.join(ROOT, 'games', id, 'pack')).errors, []);
+  for (const id of ['pixel-yard', 'pixel-room']) assert.deepStrictEqual(GP.checkFolder(path.join(ROOT, 'games', id, 'pack')).errors, []);
 });
 
-test('her-room: one open theme (dafeiyu) and four coming soon', () => {
+test('pixel-room: one open theme (dafeiyu) and four coming soon', () => {
   const m = base();
   assert.strictEqual(m.engine, 'room@1');
   assert.deepStrictEqual(m.themes.map((t) => [t.id, t.status]), [['dafeiyu', 'open'], ['claude', 'soon'], ['grok', 'soon'], ['gemini', 'soon'], ['gpt', 'soon']]);

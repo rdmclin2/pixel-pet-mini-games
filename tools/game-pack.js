@@ -15,7 +15,7 @@
 //                     walk: { cell, area: [[x, y]…], blocked: [shape…] },
 //                     objects: [{ id, sprite, x, y, … }], fx: { waterfall, water, fireflies }, quests: [ … ],
 //                     lines: { <event>: [text…] } }
-//   room@1 (她的房间)  { defaultTheme, activities: { <kind>: { label, verb, anim, seconds, deltas, needs? } },
+//   room@1 (像素房间)  { defaultTheme, activities: { <kind>: { label, verb, anim, seconds, deltas, needs? } },
 //                     themes: [{ id, character, status: 'open' | 'soon', name, blurb, motifs, palette, …open fields }],
 //                     items, quests, lines }  — docs/her-room-design.md §1 in the app repository
 //   <files>         the pictures (.webp / .png) and the sprites indexes (.json) named there; nothing else
@@ -148,7 +148,7 @@ function checkUse(use, at) {
 }
 
 // ---------------------------------------------------------------------------------------------------------------
-// room@1 (她的房间): docs/her-room-design.md §1.4
+// room@1 (像素房间): docs/her-room-design.md §1.4
 
 function checkLines(lines, at) {
   if (lines === undefined) return [];
