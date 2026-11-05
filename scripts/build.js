@@ -77,6 +77,11 @@ function main() {
       description: m.description || '', credit: m.credit || '', features: meta.features || [],
       repo: `${REPO}/tree/main/games/${id}`,
       picture: fs.existsSync(path.join(ROOT, 'games', id, 'cover.webp')) ? `${RAW}/games/${id}/cover.webp` : null,
+      // 商店详情页的预览截图（App Store 式横向一排）：games/<id>/screenshots/ 里 store.json 列出的那些
+      screenshots: (meta.screenshots || []).map((x) => {
+        if (!/^[a-z0-9][a-z0-9._-]*\.(webp|png)$/.test(String(x.file)) || !fs.existsSync(path.join(ROOT, 'games', id, 'screenshots', x.file))) throw new Error(`${id}: screenshots/${x.file} is missing`);
+        return { url: `${RAW}/games/${id}/screenshots/${x.file}`, caption: String(x.caption || '') };
+      }),
       changelog: notes(id, m.version),
       file, bytes: fs.statSync(zip).size, sha256: sha256(zip),
     };

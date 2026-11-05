@@ -17,7 +17,8 @@ games/<id>/
   pack/            安装包里的全部内容：manifest.json（地图、物件、互动、每日小事、台词）、sprites.json、terrain.webp、atlas.webp
   art/             美术源：prompts.json（GPT Image 提示词）、layout.json（切图排布）、raw/（原图，无损 WebP）
   cover.webp       商店卡片的封面
-  store.json       商店卡片上的玩法要点
+  screenshots/     商店详情页的预览截图（960×600 WebP，store.json 里列出顺序和说明）
+  store.json       商店里的玩法要点和预览截图列表
   CHANGELOG.md     每个版本的更新说明（商店的「有更新」里显示最新一节）
 catalog.json       商店目录：应用从这里得知有哪些游戏、最新版本、安装包大小和 sha256
 scripts/           build.js（打包）· publish.js（上传 CDN）· game_sprites.py（切图）· generate.sh（生成原图）
