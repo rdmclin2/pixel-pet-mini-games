@@ -158,3 +158,20 @@ test('pixel-room keeps its new display name and leaves 她的房间 to the illus
   assert.strictEqual(m.engine, 'room@1');
   assert.doesNotMatch(fs.readFileSync(path.join(ROOT, 'games', 'pixel-room', 'store.json'), 'utf8'), /她的房间/);
 });
+
+test('her-room shows real content on its screens and offers 犯懒 as its own state', () => {
+  const dir = path.join(__dirname, '..', 'games', 'her-room', 'pack');
+  const room = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8')).rooms[0];
+  const frames = JSON.parse(fs.readFileSync(path.join(dir, room.frames.clips), 'utf8'));
+  for (const c of room.content.clips.list) {
+    assert.equal(c.frames, true, `${c.id} plays frames`);
+    assert.ok(Object.keys(frames).filter((f) => f.startsWith(`${c.id}-`)).length >= 20, `${c.id} has its frames`);
+  }
+  for (const t of room.content.player.tracks) {
+    assert.ok(fs.existsSync(path.join(dir, room.images[t.cover])), `${t.title} has its cover`);
+    assert.ok(t.lyrics.length >= 4, `${t.title} has lyrics`);
+  }
+  const web = room.content.page.templates.find((t) => t.image);
+  assert.ok(fs.existsSync(path.join(dir, room.images[web.image])), 'a real web page');
+  assert.deepEqual(room.states.idle.variants, ['idle-lazy']);
+});

@@ -46,10 +46,12 @@
       "name": "dafeiyu-work-off",
       "size": "2048x1152",
       "refs": [
-        "raw/dafeiyu-base-off.png",
-        "raw/dafeiyu-sheet.png"
+        "raw/round2/dafeiyu-work-off.png",
+        "raw/dafeiyu-sheet.png",
+        "raw/dafeiyu-game-off.png"
       ],
-      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She sits on the swivel office chair pulled up to the desk with her back to the camera, facing the desk, typing on the laptop, which is now OPEN with its glowing screen facing her (we see the screen over her shoulder); the hoodie that was on the chair now hangs over the chair back behind her; her long blue hair falls down her back over the chair, the maid headdress and apron bow visible from behind, the whale tail hangs down beside the chair. She is small and chibi, matching the scale of the desk. She is lit by the blue moonlight and the bluish laptop glow. Keep the room, camera, furniture, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}"
+      "prompt": "Edit the first image. Change ONLY her hair: seen from behind, her long royal-blue hair must be voluminous and wavy with big soft S-shaped curls and ringlets down to her hips, spilling over the chair back in distinct curling locks with visible strand lines and highlights, exactly like the back view on the second image (character sheet) and the curly hair in the third image; add the one curled ahoge on top of her head. {character} She keeps sitting on the same swivel chair with her back to the camera, typing on the same open laptop with its glowing screen visible. Keep her pose, headdress, whale-fin ears, apron bow, tail, the laptop, the hoodie on the chair back, the room, camera, desk lamp OFF and all lighting exactly the same as the first image; change nothing else. {style}",
+      "round": 4
     },
     {
       "name": "dafeiyu-sleep-off",
@@ -77,7 +79,8 @@
         "raw/dafeiyu-work-off.png",
         "raw/dafeiyu-base-lit.png"
       ],
-      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character sitting at the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}"
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character sitting at the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "round": 4
     },
     {
       "name": "dafeiyu-sleep-lit",
@@ -288,6 +291,40 @@
         "raw/dafeiyu-sheet.png"
       ],
       "prompt": "Edit the first image. Change only her eyes: both eyes are now gently closed mid-blink, drawn as soft curved lash lines on her skin exactly like the closed-eye close-up on the character sheet in the second image. Keep her face shape, bangs, mouth, head position and size, hair, outfit, the whole room, camera and all lighting exactly the same as the first image, every other pixel unchanged. {style}"
+    },
+    {
+      "name": "round2/dafeiyu-work-off",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-base-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She sits on the swivel office chair pulled up to the desk with her back to the camera, facing the desk, typing on the laptop, which is now OPEN with its glowing screen facing her (we see the screen over her shoulder); the hoodie that was on the chair now hangs over the chair back behind her; her long blue hair falls down her back over the chair, the maid headdress and apron bow visible from behind, the whale tail hangs down beside the chair. She is small and chibi, matching the scale of the desk. She is lit by the blue moonlight and the bluish laptop glow. Keep the room, camera, furniture, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}",
+      "note": "第 2 轮被替换下来的原图（头发卷度不足），文件只作前后对照，不再出图"
+    },
+    {
+      "name": "round2/dafeiyu-work-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-work-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character sitting at the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "note": "第 2 轮被替换下来的原图，不再出图"
+    },
+    {
+      "name": "cover-rain-whale",
+      "round": 4,
+      "size": "1024x1024",
+      "refs": [],
+      "prompt": "Square music album cover art: a small deep-blue whale swimming through a rainy night sky above a sleeping city, a big pale moon behind it, soft rain streaks and blurred warm city bokeh below, dreamy lo-fi mood, deep blue and soft amber palette. Japanese hand-drawn anime illustration with painterly shading. No people, no text, no letters, no logo."
+    },
+    {
+      "name": "cover-moonlight",
+      "round": 4,
+      "size": "1024x1024",
+      "refs": [],
+      "prompt": "Square music album cover art: a window with blue curtains open to a huge pale moon, a mug and a cassette tape on the sill, rain drops on the glass, calm late-night lo-fi mood, indigo and silver-blue palette. Japanese hand-drawn anime illustration with painterly shading. No people, no text, no letters, no logo."
     }
   ]
 }

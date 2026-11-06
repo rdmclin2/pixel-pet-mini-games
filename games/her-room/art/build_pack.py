@@ -29,6 +29,10 @@ for name, im in cells:
 atlas.save(f'{PACK}/{rid}-parts.webp', lossless=True, exact=True)
 json.dump(index, open(f'{PACK}/{rid}-parts.json', 'w'), indent=1)
 room['images'] = {'parts': f'{rid}-parts.webp'}; room['sprites'] = f'{rid}-parts.json'
+# 屏幕的真实内容（clips.py、web_pages.py 的产物）：视频帧图集、封面、网页长图
+room['images'].update({'clips': f'{rid}-clips.webp', 'cover-rain-whale': f'{rid}-cover-rain-whale.webp', 'cover-moonlight': f'{rid}-cover-moonlight.webp', 'page-rain-notes': f'{rid}-page-rain-notes.webp'})
+room['frames'] = {'clips': f'{rid}-clips.json'}
+for f in [*list(room['images'].values())[1:], room['frames']['clips']]: shutil.copy(f'out/{f}', f'{PACK}/{f}')
 for key, b in blink.items():
     st = room['states'][key]
     st['blink'] = {'sprite': {'off': b['off'], 'lit': b['lit']}, 'at': b['at'], 'every': (st.get('blink') or {}).get('every', [3, 6])}

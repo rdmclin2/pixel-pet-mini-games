@@ -74,7 +74,7 @@
       "character": "dafeiyu",
       "status": "open",
       "name": "鲸鱼女仆的雨夜小屋",
-      "blurb": "深夜、下雨、蓝色月光，台灯一开桌面就暖起来。",
+      "blurb": "深夜、下雨、蓝色月光，台灯一开整屋都暖起来。",
       "palette": {
         "primary": "#2C4A8A",
         "accent": "#6FA8E8",
@@ -95,7 +95,7 @@
           ],
           "glow": {
             "r": 620,
-            "alpha": 0.5,
+            "alpha": 0.3,
             "color": "#FFC46E"
           },
           "rampOn": 0.17,
@@ -792,7 +792,7 @@
       },
       "content": {
         "clips": {
-          "fps": 24,
+          "fps": 8,
           "swipeEvery": [
             8,
             15
@@ -800,35 +800,32 @@
           "list": [
             {
               "id": "jellyfish",
-              "scene": "jellyfish",
+              "frames": true,
+              "pingpong": true,
               "caption": "深海里的水母，看着好安静",
               "author": "海底小剧场",
               "likes": "12.8w"
             },
             {
               "id": "rain-window",
-              "scene": "rain-window",
+              "frames": true,
+              "pingpong": true,
               "caption": "雨夜窗边的台灯，适合发呆",
               "author": "雨声电台",
               "likes": "3.4w"
             },
             {
-              "id": "hearts",
-              "scene": "hearts",
-              "caption": "今天也要给大肥鱼比心",
-              "author": "大肥鱼日常",
-              "likes": "8,964"
-            },
-            {
               "id": "city",
-              "scene": "city",
+              "frames": true,
+              "pingpong": true,
               "caption": "凌晨两点的城市灯光",
               "author": "夜行记录",
               "likes": "5.1w"
             },
             {
               "id": "cat",
-              "scene": "cat",
+              "frames": true,
+              "pingpong": true,
               "caption": "困到睁不开眼的小猫",
               "author": "猫猫研究所",
               "likes": "21.6w"
@@ -836,15 +833,18 @@
           ]
         },
         "page": {
+          "seconds": 14,
           "templates": [
             {
               "id": "doc",
               "title": "周报.docx",
-              "lines": 14
+              "url": "https://docs.example.cn/d/weekly-report"
             },
             {
-              "id": "search",
-              "title": "搜索"
+              "id": "rain-notes",
+              "title": "雨夜笔记",
+              "url": "https://rain-notes.example.cn/rainy-night-songs",
+              "image": "page-rain-notes"
             }
           ]
         },
@@ -853,12 +853,74 @@
             {
               "title": "雨夜的鲸鱼",
               "artist": "大肥鱼",
-              "seconds": 186
+              "seconds": 186,
+              "cover": "cover-rain-whale",
+              "lyrics": [
+                [
+                  0,
+                  "窗外的雨 还没有停"
+                ],
+                [
+                  4,
+                  "城市的灯 慢慢睡去"
+                ],
+                [
+                  8,
+                  "我把耳机 调小一格"
+                ],
+                [
+                  12,
+                  "听你游过 整片夜色"
+                ],
+                [
+                  16,
+                  "小小的鲸 大大的海"
+                ],
+                [
+                  20,
+                  "今晚哪里 都不想去"
+                ],
+                [
+                  24,
+                  "就这样吧 靠在床头"
+                ],
+                [
+                  28,
+                  "等雨声把我 轻轻带走"
+                ]
+              ]
             },
             {
               "title": "蓝色月光",
               "artist": "小鲸鱼乐队",
-              "seconds": 204
+              "seconds": 204,
+              "cover": "cover-moonlight",
+              "lyrics": [
+                [
+                  0,
+                  "月光落在 窗台上"
+                ],
+                [
+                  4,
+                  "杯子里的茶 凉了一半"
+                ],
+                [
+                  8,
+                  "你说明天 也会下雨"
+                ],
+                [
+                  12,
+                  "那就再听 一遍这首歌"
+                ],
+                [
+                  16,
+                  "蓝色的夜 慢慢地亮"
+                ],
+                [
+                  20,
+                  "晚安 晚安"
+                ]
+              ]
             }
           ]
         },
@@ -1067,9 +1129,16 @@
         ]
       },
       "images": {
-        "parts": "dafeiyu-parts.webp"
+        "parts": "dafeiyu-parts.webp",
+        "clips": "dafeiyu-clips.webp",
+        "cover-rain-whale": "dafeiyu-cover-rain-whale.webp",
+        "cover-moonlight": "dafeiyu-cover-moonlight.webp",
+        "page-rain-notes": "dafeiyu-page-rain-notes.webp"
       },
-      "sprites": "dafeiyu-parts.json"
+      "sprites": "dafeiyu-parts.json",
+      "frames": {
+        "clips": "dafeiyu-clips.json"
+      }
     }
   ],
   "quests": [

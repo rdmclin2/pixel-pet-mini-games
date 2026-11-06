@@ -8,6 +8,7 @@
 """
 import json, os
 import numpy as np, cv2
+from warm import warm
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 W, H = 1920, 1080
 STATES = ['idle', 'idle-lazy', 'phone', 'music', 'sleep', 'work', 'game', 'stand']
@@ -48,17 +49,20 @@ def composite(im, base, roi):
 if __name__ == '__main__':
     os.makedirs('out', exist_ok=True)
     base = {k: load(f'dafeiyu-base-{k}') for k in ('off', 'lit')}
-    for k, im in base.items(): cv2.imwrite(f'out/dafeiyu-base-{k}.webp', im, [cv2.IMWRITE_WEBP_QUALITY, 88])
-    report = {'thresholds': {'diff': THRESH, 'minArea': MIN_AREA, 'grow': GROW, 'feather': FEATHER}, 'static_diff(0-255)': {}, 'mask': {}, 'lighting': {'base': {'lamp-area off': stats(base['off'], LAMP), 'lamp-area lit': stats(base['lit'], LAMP), 'bed-area off': stats(base['off'], FAR), 'bed-area lit': stats(base['lit'], FAR)}}}
+    warmed_base = warm(base['lit'])  # 整屋变暖（warm.py）：lit 图合成后统一烘焙，静止部分仍和底版逐像素相同
+    cv2.imwrite('out/dafeiyu-base-off.webp', base['off'], [cv2.IMWRITE_WEBP_QUALITY, 88]); cv2.imwrite('out/dafeiyu-base-lit.webp', warmed_base, [cv2.IMWRITE_WEBP_QUALITY, 88])
+    report = {'thresholds': {'diff': THRESH, 'minArea': MIN_AREA, 'grow': GROW, 'feather': FEATHER}, 'static_diff(0-255)': {}, 'mask': {}, 'lighting': {'base': {'lamp-area off': stats(base['off'], LAMP), 'lamp-area lit': stats(warmed_base, LAMP), 'bed-area off': stats(base['off'], FAR), 'bed-area lit': stats(warmed_base, FAR)}}}
     for s in STATES:
         for k in ('off', 'lit'):
             n = f'dafeiyu-{s}-{k}'
             if not os.path.exists(raw(n)): print('missing', n); continue
-            im = load(n); out, hard = composite(im, base[k], ROI[s])
+            im = load(n); out, hard = composite(im, base[k], ROI[s]); ref = base[k]
+            if k == 'lit':
+                out = warm(out, subject=cv2.GaussianBlur(hard, (0, 0), FEATHER).astype(np.float32) / 255); ref = warmed_base
             cv2.imwrite(f'out/{n}.webp', out, [cv2.IMWRITE_WEBP_QUALITY, 88])
             ys, xs = np.where(hard > 0)
             report['mask'][n] = {'percent': round(float((hard > 0).mean() * 100), 1), 'bbox': [int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())] if len(xs) else None}
-            report['static_diff(0-255)'][n] = {'vs': f'base-{k}', 'before': {r: mad(im, base[k], b) for r, b in STATIC.items()}, 'after': {r: mad(out, base[k], b) for r, b in STATIC.items()}}
+            report['static_diff(0-255)'][n] = {'vs': f'base-{k}', 'before': {r: mad(im, base[k], b) for r, b in STATIC.items()}, 'after': {r: mad(out, ref, b) for r, b in STATIC.items()}}
         if os.path.exists(f'out/dafeiyu-{s}-lit.webp') and os.path.exists(f'out/dafeiyu-{s}-off.webp'):
             off = cv2.imread(f'out/dafeiyu-{s}-off.webp'); lit = cv2.imread(f'out/dafeiyu-{s}-lit.webp')
             report['lighting'][s] = {'lamp-area off': stats(off, LAMP), 'lamp-area lit': stats(lit, LAMP), 'bed-area off': stats(off, FAR), 'bed-area lit': stats(lit, FAR)}
