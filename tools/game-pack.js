@@ -272,6 +272,7 @@ function checkTheme(t, i, { files, sprites, characters, kinds }) {
   if (!t.images || typeof t.images.atlas !== 'string') e.push(`${name}: images.atlas is missing`);
   if (typeof t.sprites !== 'string') e.push(`${name}: sprites is missing`);
   if (!(t.outfit === undefined || str(t.outfit))) e.push(`${name}: outfit must be an outfit id`);
+  if (t.smooth !== undefined && typeof t.smooth !== 'boolean') e.push(`${name}: smooth must be true / false`);
   if (t.petHeight !== undefined && !between(t.petHeight, 8, 400)) e.push(`${name}: petHeight must be 8–400`);
   if (t.petSpeed !== undefined && !(num(t.petSpeed) && t.petSpeed > 0 && t.petSpeed <= 400)) e.push(`${name}: petSpeed must be 1–400`);
   const index = sprites && typeof t.sprites === 'string' ? sprites[t.sprites] : null;
@@ -323,6 +324,7 @@ function checkTheme(t, i, { files, sprites, characters, kinds }) {
       if (a.pose === 'tucked' && a.lie === undefined) e.push(`${aat}: pose "tucked" needs lie [x, y] (where her feet go on the bed)`);
       if (a.anim !== undefined && !USE_ANIMS.includes(a.anim)) e.push(`${aat}.anim "${a.anim}"`);
       if (a.bubble !== undefined && !ptIn(a.bubble, world)) e.push(`${aat}.bubble must be [x, y] inside the world`);
+      if (a.lieScale !== undefined && !between(a.lieScale, 0.3, 1)) e.push(`${aat}.lieScale must be 0.3–1`);
       if (a.props !== undefined && !Array.isArray(a.props)) e.push(`${aat}.props must be a list`);
       for (const [n, p] of (Array.isArray(a.props) ? a.props : []).entries()) e.push(...checkProp(p, `${aat}.props[${n}]`, { has, world }));
       if (a.lines !== undefined) {
