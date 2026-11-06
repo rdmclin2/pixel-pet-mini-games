@@ -1,0 +1,346 @@
+{
+ "idle": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.91,
+    "R-B": -146.8,
+    "luma": 77.4
+   },
+   "bed-edge": {
+    "sat": 0.22,
+    "R-B": 25.2,
+    "luma": 138.9
+   },
+   "desk": {
+    "sat": 0.54,
+    "R-B": 84.7,
+    "luma": 105.7
+   },
+   "desk-wall": {
+    "sat": 0.35,
+    "R-B": 62.0,
+    "luma": 149.2
+   },
+   "floor": {
+    "sat": 0.53,
+    "R-B": 18.7,
+    "luma": 44.7
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -115.4,
+    "luma": 51.3
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.92,
+   "R-B": -146.5,
+   "luma": 75.2
+  },
+  "halo-ring-mean(0-255)": 4.5,
+  "halo-ring-p99": 24.0,
+  "hairHue-lit": 224.5,
+  "hairHue-off": 225.9
+ },
+ "idle-lazy": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.91,
+    "R-B": -146.9,
+    "luma": 77.3
+   },
+   "bed-edge": {
+    "sat": 0.22,
+    "R-B": 24.9,
+    "luma": 138.7
+   },
+   "desk": {
+    "sat": 0.54,
+    "R-B": 84.8,
+    "luma": 105.7
+   },
+   "desk-wall": {
+    "sat": 0.35,
+    "R-B": 61.9,
+    "luma": 149.2
+   },
+   "floor": {
+    "sat": 0.53,
+    "R-B": 18.7,
+    "luma": 44.7
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -115.4,
+    "luma": 51.3
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.92,
+   "R-B": -146.6,
+   "luma": 75.1
+  },
+  "halo-ring-mean(0-255)": 4.4,
+  "halo-ring-p99": 23.0,
+  "hairHue-lit": 224.5,
+  "hairHue-off": 225.9
+ },
+ "phone": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.88,
+    "R-B": -140.4,
+    "luma": 81.8
+   },
+   "bed-edge": {
+    "sat": 0.22,
+    "R-B": 24.7,
+    "luma": 138.8
+   },
+   "desk": {
+    "sat": 0.54,
+    "R-B": 84.7,
+    "luma": 105.7
+   },
+   "desk-wall": {
+    "sat": 0.35,
+    "R-B": 62.0,
+    "luma": 149.2
+   },
+   "floor": {
+    "sat": 0.53,
+    "R-B": 18.7,
+    "luma": 44.8
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -115.4,
+    "luma": 51.3
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.89,
+   "R-B": -141.2,
+   "luma": 79.4
+  },
+  "halo-ring-mean(0-255)": 9.44,
+  "halo-ring-p99": 60.0,
+  "hairHue-lit": 221.6,
+  "hairHue-off": 224.5
+ },
+ "music": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.89,
+    "R-B": -132.5,
+    "luma": 72.8
+   },
+   "bed-edge": {
+    "sat": 0.22,
+    "R-B": 25.0,
+    "luma": 138.9
+   },
+   "desk": {
+    "sat": 0.54,
+    "R-B": 84.7,
+    "luma": 105.7
+   },
+   "desk-wall": {
+    "sat": 0.35,
+    "R-B": 61.9,
+    "luma": 149.2
+   },
+   "floor": {
+    "sat": 0.53,
+    "R-B": 18.9,
+    "luma": 44.8
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -115.4,
+    "luma": 51.3
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.9,
+   "R-B": -132.9,
+   "luma": 70.7
+  },
+  "halo-ring-mean(0-255)": 3.77,
+  "halo-ring-p99": 17.0,
+  "hairHue-lit": 221.6,
+  "hairHue-off": 224.5
+ },
+ "sleep": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.88,
+    "R-B": -147.9,
+    "luma": 85.4
+   },
+   "bed-edge": {
+    "sat": 0.22,
+    "R-B": 25.2,
+    "luma": 153.6
+   },
+   "desk": {
+    "sat": 0.54,
+    "R-B": 84.7,
+    "luma": 105.7
+   },
+   "desk-wall": {
+    "sat": 0.35,
+    "R-B": 62.0,
+    "luma": 149.2
+   },
+   "floor": {
+    "sat": 0.53,
+    "R-B": 18.5,
+    "luma": 44.7
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -118.3,
+    "luma": 52.1
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.89,
+   "R-B": -148.7,
+   "luma": 82.7
+  },
+  "halo-ring-mean(0-255)": 4.91,
+  "halo-ring-p99": 19.0,
+  "hairHue-lit": 218.8,
+  "hairHue-off": 221.6
+ },
+ "work": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.91,
+    "R-B": -147.0,
+    "luma": 77.7
+   },
+   "bed-edge": {
+    "sat": 0.22,
+    "R-B": 24.3,
+    "luma": 139.1
+   },
+   "desk": {
+    "sat": 0.54,
+    "R-B": 2.4,
+    "luma": 106.3
+   },
+   "desk-wall": {
+    "sat": 0.36,
+    "R-B": 63.2,
+    "luma": 149.5
+   },
+   "floor": {
+    "sat": 0.52,
+    "R-B": 4.9,
+    "luma": 37.7
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -115.4,
+    "luma": 51.3
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.92,
+   "R-B": -146.7,
+   "luma": 75.5
+  },
+  "halo-ring-mean(0-255)": 10.33,
+  "halo-ring-p99": 117.0,
+  "hairHue-lit": 232.9,
+  "hairHue-off": 230.1
+ },
+ "game": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.91,
+    "R-B": -147.0,
+    "luma": 77.7
+   },
+   "bed-edge": {
+    "sat": 0.45,
+    "R-B": -40.0,
+    "luma": 128.6
+   },
+   "desk": {
+    "sat": 0.57,
+    "R-B": -6.4,
+    "luma": 109.1
+   },
+   "desk-wall": {
+    "sat": 0.36,
+    "R-B": 64.4,
+    "luma": 150.1
+   },
+   "floor": {
+    "sat": 0.47,
+    "R-B": -5.3,
+    "luma": 30.1
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -115.4,
+    "luma": 51.3
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.92,
+   "R-B": -146.7,
+   "luma": 75.5
+  },
+  "halo-ring-mean(0-255)": 18.3,
+  "halo-ring-p99": 207.0,
+  "hairHue-lit": 231.5,
+  "hairHue-off": 228.7
+ },
+ "stand": {
+  "lit": {
+   "bed-left": {
+    "sat": 0.91,
+    "R-B": -147.0,
+    "luma": 77.7
+   },
+   "bed-edge": {
+    "sat": 0.58,
+    "R-B": -69.8,
+    "luma": 114.3
+   },
+   "desk": {
+    "sat": 0.56,
+    "R-B": 88.3,
+    "luma": 109.1
+   },
+   "desk-wall": {
+    "sat": 0.35,
+    "R-B": 62.1,
+    "luma": 149.4
+   },
+   "floor": {
+    "sat": 0.49,
+    "R-B": 7.1,
+    "luma": 51.4
+   },
+   "left-wall": {
+    "sat": 0.96,
+    "R-B": -115.4,
+    "luma": 51.3
+   }
+  },
+  "off-bed-left": {
+   "sat": 0.92,
+   "R-B": -146.7,
+   "luma": 75.5
+  },
+  "halo-ring-mean(0-255)": 10.11,
+  "halo-ring-p99": 108.0,
+  "hairHue-lit": 231.5,
+  "hairHue-off": 228.7
+ }
+}

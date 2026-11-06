@@ -1,0 +1,353 @@
+{
+  "model": "lobehub/gpt-image-2.5-sunburst",
+  "quality": "high",
+  "character": "Dafeiyu, a chibi Q-version anime girl about 3 heads tall: big round deep-blue eyes with white highlights and a small soft face, long wavy royal-blue hair down to her hips with one curled ahoge on top and blunt straight bangs, two small blue whale-fin shaped ears pointing out sideways from her hair, a white frilly lace maid headdress (katyusha) with a small navy ribbon, a navy-blue long-sleeved maid dress with white cuffs, a white collar with a navy bow at the neck, a white frilly apron with a lace hem, white socks and navy Mary Jane shoes, and a deep-blue whale tail with a lighter underside coming out from behind her skirt.",
+  "style": "Japanese hand-drawn anime illustration, soft clean lineart with painterly cel shading, cozy lo-fi late-night bedroom illustration. NOT pixel art, not 3D, no text, no letters, no watermark, no logo, no subtitles, no UI.",
+  "room": "a small lived-in Japanese apartment bedroom seen from a high three-quarter top-down camera (looking down about 45 degrees from the upper corner), with real depth and perspective: a wide window across the top-left back wall with blue curtains, rain streaks and droplets on the glass, the city outside blurred into soft bokeh light dots; a single bed running diagonally through the center-left with two pillows against the left wall and a crumpled blue blanket heaped toward its foot; a wooden desk along the right wall with a desk lamp, a laptop, piles of stacked books, an open notebook with a pen, scattered loose papers, a mug and a small pill bottle, a bookshelf and pinned notes on the wall above the desk, a PC tower under the desk; a dark swivel office chair in the lower right with a hoodie and clothes draped over it; dark wooden floor.",
+  "jobs": [
+    {
+      "name": "dafeiyu-sheet",
+      "size": "2048x2048",
+      "refs": [
+        "ref/ref8-character-crop.png",
+        "ref/ref52-character-crop.png",
+        "ref/pixel-pet-dafeiyu.png"
+      ],
+      "prompt": "Character design reference sheet of {character} The first two reference images show how she looks in the target illustration (chibi proportions, face and art style); the third (pixel art) shows her outfit details and colors - redraw her as a clean hand-drawn anime illustration, never as pixels. Layout on a plain pale grey-blue background with neutral soft lighting: top row three full-body views side by side - front view, side view (facing right) and back view (showing the long hair, apron bow and whale tail); bottom row four head close-ups of the same face: eyes open, eyes closed sleeping, half-lidded lazy sleepy eyes, gentle smile. Exactly the same character, hair, ears, headdress and outfit in every view. {style}"
+    },
+    {
+      "name": "dafeiyu-base-off",
+      "size": "2048x1152",
+      "refs": [
+        "ref/ref-8.png",
+        "ref/ref-52.png"
+      ],
+      "prompt": "Wide 16:9 background illustration of an EMPTY room with nobody in it: {room} Use the reference screenshots only for the camera angle, room layout, mood and colors (ignore any character, subtitles, chat bubbles and the app logo in them). Lighting: deep night, the desk lamp is OFF, the whole room is lit only by cold blue moonlight and city glow from the rainy window, deep saturated blues with soft dark shadows; the laptop lid is closed. No people, no characters. {style}"
+    },
+    {
+      "name": "dafeiyu-base-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-base-off.png"
+      ],
+      "prompt": "Edit this illustration. Only turn ON the desk lamp on the desk: the lampshade glows, warm amber-yellow light pools over the desk top, the books, papers, the wall and bookshelf behind the desk and the nearby floor and chair, with soft falloff; the bed and the window side stay in cold blue moonlight. Keep everything else exactly the same: same camera, same composition, same objects in the same places, same rain and bokeh outside. {style}"
+    },
+    {
+      "name": "dafeiyu-phone-off",
+      "size": "2048x1152",
+      "round": 2,
+      "refs": [
+        "raw/round1/dafeiyu-phone-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her hands and the phone: she still lies on her stomach on the bed propped on her elbows, but now the smartphone lies flat on the bed sheet in front of her chest, between her elbows, with its glowing screen facing straight up toward the camera so the whole rectangular screen is clearly visible from above (a bright vertical short-video app screen, no readable text), one hand resting beside it and one finger touching the screen, and she looks down at it; the screen glow lights her face softly from below. Keep her face, hair, headdress, whale-fin ears, outfit, legs, whale tail, the room, camera, desk lamp OFF and all lighting exactly the same as the first image (the second image is her character sheet, for reference only). {style}"
+    },
+    {
+      "name": "dafeiyu-work-off",
+      "size": "2048x1152",
+      "refs": [
+        "raw/round2/dafeiyu-work-off.png",
+        "raw/dafeiyu-sheet.png",
+        "raw/dafeiyu-game-off.png"
+      ],
+      "prompt": "Edit the first image. Change ONLY her hair: seen from behind, her long royal-blue hair must be voluminous and wavy with big soft S-shaped curls and ringlets down to her hips, spilling over the chair back in distinct curling locks with visible strand lines and highlights, exactly like the back view on the second image (character sheet) and the curly hair in the third image; add the one curled ahoge on top of her head. {character} She keeps sitting on the same swivel chair with her back to the camera, typing on the same open laptop with its glowing screen visible. Keep her pose, headdress, whale-fin ears, apron bow, tail, the laptop, the hoodie on the chair back, the room, camera, desk lamp OFF and all lighting exactly the same as the first image; change nothing else. {style}",
+      "round": 4
+    },
+    {
+      "name": "dafeiyu-sleep-off",
+      "size": "2048x1152",
+      "round": 2,
+      "refs": [
+        "raw/round1/dafeiyu-sleep-off.png"
+      ],
+      "prompt": "Edit this illustration. Add only one thing: her smartphone lying face-up on the bed sheet just beside the pillow, a little in front of her sleeping face (to the right of her hands), its lock screen faintly glowing pale blue-white with a soft glow on the sheet around it. Keep the sleeping character (pose, closed eyes, face, hair, headdress, outfit, whale tail), the blanket, the room, camera, desk lamp OFF and all lighting exactly the same; change nothing else. {style}"
+    },
+    {
+      "name": "dafeiyu-phone-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-phone-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, a faint warm rim of light reaching the character on the bed, while the bed and window side keep their blue moonlight. Keep the character (pose, face, hair, outfit), the phone, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "round": 2
+    },
+    {
+      "name": "dafeiyu-work-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-work-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character sitting at the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "round": 4
+    },
+    {
+      "name": "dafeiyu-sleep-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-sleep-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, a faint warm glow reaching the edge of the bed, while the sleeping character and the bed mostly keep their blue moonlight. Keep the character (pose, face, hair, outfit), the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "round": 2
+    },
+    {
+      "name": "round1/dafeiyu-sleep-off",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-base-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She is asleep on the bed, lying on her side with her head on the pillow and eyes closed, peaceful sleeping face, the crumpled blue blanket pulled over her up to her shoulders, the maid headdress still on her head, her long blue hair spread over the pillow, and the whale tail peeking out from under the edge of the blanket. She is small and chibi, matching the scale of the bed. She is lit by the same blue moonlight. Keep the room, camera, furniture, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}",
+      "note": "第 1 轮：睡觉图没有亮着的屏幕（笔记本合着、无手机），没法标屏幕四角；保留为 raw/round1/ 留档，第 2 轮在它上面加手机。"
+    },
+    {
+      "name": "round1/dafeiyu-sleep-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-sleep-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, a faint warm glow reaching the edge of the bed, while the sleeping character and the bed mostly keep their blue moonlight. Keep the character (pose, face, hair, outfit), the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "note": "第 1 轮开灯版（对应 round1 关灯版）。"
+    },
+    {
+      "name": "round1/dafeiyu-phone-off",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-base-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She is lying on her stomach on the bed on top of the blanket, propped up on her elbows near the pillows, holding a smartphone in both hands and looking at it, the bright phone screen faces her and casts a soft cool-white glow on her face, her legs bent up and the whale tail curled up behind her. She is small and chibi, matching the scale of the bed. She is lit by the same blue moonlight as the room. Keep the room, camera, furniture, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}",
+      "note": "第 1 轮：手机竖着举在脸前，屏幕朝她、背面朝镜头，画面里看不到屏幕，无法贴屏幕内容和标四角；保留留档。"
+    },
+    {
+      "name": "round1/dafeiyu-phone-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-phone-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, a faint warm rim of light reaching the character on the bed, while the bed and window side keep their blue moonlight. Keep the character (pose, face, hair, outfit), the phone, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "note": "第 1 轮开灯版。"
+    },
+    {
+      "name": "dafeiyu-idle-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-base-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She sits on the near long edge of the bed, in the middle of the bed's side, facing the camera and looking up toward it with a blank dreamy spaced-out expression, big round eyes fully open and clearly visible, both hands resting on the bed beside her thighs, legs dangling over the bed edge with her shoes above the floor, her whale tail lying on the bed behind her, her long wavy hair falling over her shoulders. Beside her on the bed sheet a smartphone lies flat with its glowing lock screen facing straight up toward the camera so the whole rectangular screen is clearly visible, softly glowing pale blue. She is small and chibi, matching the scale of the bed, lit by blue moonlight. Keep the room, camera, furniture, window, curtains, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}"
+    },
+    {
+      "name": "dafeiyu-idle-lazy-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-idle-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her expression and upper-body posture so she looks lazy and drowsy: half-lidded sleepy eyes (like the half-lidded close-up on the character sheet in the second image), mouth a tiny bit open, head tilted to one side, shoulders drooping, back slumped, arms hanging loosely. She still sits at the same spot on the bed edge at the same size with the same hair, headdress, whale-fin ears, outfit, legs and whale tail. Keep the phone on the bed, the room, camera, desk lamp OFF and all lighting exactly the same as the first image. {style}"
+    },
+    {
+      "name": "dafeiyu-music-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-base-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She sits on the bed leaning back against the two pillows at the head of the bed, legs stretched out along the bed with her knees slightly bent, facing toward the camera and slightly right, wearing large white over-ear headphones on top of her hair, eyes gently closed with a small happy smile, swaying to the music, head tilted. A smartphone rests flat on her lap, on top of her apron, with its glowing music-player screen facing straight up toward the camera so the whole rectangular screen is clearly visible, one hand holding its edge without covering it. Her whale tail curls out to the side on the bed. She is small and chibi, matching the scale of the bed, lit by blue moonlight and the soft phone glow. Keep the room, camera, furniture, window, curtains, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}"
+    },
+    {
+      "name": "dafeiyu-game-off",
+      "size": "2048x1152",
+      "round": 4,
+      "refs": [
+        "raw/round2/dafeiyu-game-off.png",
+        "raw/dafeiyu-sheet.png",
+        "raw/dafeiyu-work-off.png"
+      ],
+      "prompt": "Edit the first image. Change ONLY her hair: her long royal-blue hair must be voluminous and wavy with big soft S-shaped curls and ringlets down to her hips, in distinct curling locks with visible strand lines and highlights, exactly like the hair on the second image (character sheet) and the curly hair in the third image; keep the one curled ahoge on top. {character} Keep her pose, her face in profile, both hands holding the white game controller, headdress, whale-fin ears, apron bow, the lifted tail, the open laptop and its screen, the hoodie on the chair back, the room, camera, desk lamp OFF and all lighting exactly the same as the first image; change nothing else. {style}"
+    },
+    {
+      "name": "dafeiyu-stand-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-base-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She stands on the wooden floor in the gap between the foot of the bed and the desk, with her back to the camera, walking toward the desk, one hand resting on the back of the swivel chair, her long blue hair flowing down her back, the white apron bow and maid headdress visible from behind, whale tail visible behind her skirt, slightly lifted. She is small and chibi, matching the scale of the chair, lit by blue moonlight. Keep the room, camera, furniture, window, curtains, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}"
+    },
+    {
+      "name": "dafeiyu-idle-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-idle-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, a faint warm rim of light reaching the character on the bed, while the bed and window side keep their blue moonlight. Keep the character (pose, face, hair, outfit), the phone, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}"
+    },
+    {
+      "name": "dafeiyu-idle-lazy-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-idle-lazy-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, a faint warm rim of light reaching the character on the bed, while the bed and window side keep their blue moonlight. Keep the character (pose, face, hair, outfit), the phone, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}"
+    },
+    {
+      "name": "dafeiyu-music-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-music-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, a faint warm rim of light reaching the character on the bed, while the bed and window side keep their blue moonlight. Keep the character (pose, face, hair, outfit), the headphones, the phone, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}"
+    },
+    {
+      "name": "dafeiyu-game-lit",
+      "size": "2048x1152",
+      "round": 4,
+      "refs": [
+        "raw/dafeiyu-game-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character near the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the controller, the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}"
+    },
+    {
+      "name": "dafeiyu-stand-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-stand-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character near the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the room, camera and every object exactly the same as the first image; only the lighting changes. {style}"
+    },
+    {
+      "name": "dafeiyu-idle-blink-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-idle-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her eyes: both eyes are now gently closed mid-blink, drawn as soft curved lash lines on her skin exactly like the closed-eye close-up on the character sheet in the second image. Keep her face shape, bangs, mouth, head position and size, hair, outfit, the whole room, camera and all lighting exactly the same as the first image, every other pixel unchanged. {style}"
+    },
+    {
+      "name": "dafeiyu-idle-blink-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-idle-lit.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her eyes: both eyes are now gently closed mid-blink, drawn as soft curved lash lines on her skin exactly like the closed-eye close-up on the character sheet in the second image. Keep her face shape, bangs, mouth, head position and size, hair, outfit, the whole room, camera and all lighting exactly the same as the first image, every other pixel unchanged. {style}"
+    },
+    {
+      "name": "dafeiyu-idle-lazy-blink-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-idle-lazy-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her eyes: both eyes are now gently closed mid-blink, drawn as soft curved lash lines on her skin exactly like the closed-eye close-up on the character sheet in the second image. Keep her face shape, bangs, mouth, head position and size, hair, outfit, the whole room, camera and all lighting exactly the same as the first image, every other pixel unchanged. {style}"
+    },
+    {
+      "name": "dafeiyu-idle-lazy-blink-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-idle-lazy-lit.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her eyes: both eyes are now gently closed mid-blink, drawn as soft curved lash lines on her skin exactly like the closed-eye close-up on the character sheet in the second image. Keep her face shape, bangs, mouth, head position and size, hair, outfit, the whole room, camera and all lighting exactly the same as the first image, every other pixel unchanged. {style}"
+    },
+    {
+      "name": "dafeiyu-phone-blink-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-phone-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her eyes: both eyes are now gently closed mid-blink, drawn as soft curved lash lines on her skin exactly like the closed-eye close-up on the character sheet in the second image. Keep her face shape, bangs, mouth, head position and size, hair, outfit, the whole room, camera and all lighting exactly the same as the first image, every other pixel unchanged. {style}"
+    },
+    {
+      "name": "dafeiyu-phone-blink-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-phone-lit.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her eyes: both eyes are now gently closed mid-blink, drawn as soft curved lash lines on her skin exactly like the closed-eye close-up on the character sheet in the second image. Keep her face shape, bangs, mouth, head position and size, hair, outfit, the whole room, camera and all lighting exactly the same as the first image, every other pixel unchanged. {style}"
+    },
+    {
+      "name": "round2/dafeiyu-work-off",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-base-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image (the room). Put the character from the second image (character sheet) into the room: {character} She sits on the swivel office chair pulled up to the desk with her back to the camera, facing the desk, typing on the laptop, which is now OPEN with its glowing screen facing her (we see the screen over her shoulder); the hoodie that was on the chair now hangs over the chair back behind her; her long blue hair falls down her back over the chair, the maid headdress and apron bow visible from behind, the whale tail hangs down beside the chair. She is small and chibi, matching the scale of the desk. She is lit by the blue moonlight and the bluish laptop glow. Keep the room, camera, furniture, desk lamp OFF and lighting exactly the same as the first image; change nothing else. {style}",
+      "note": "第 2 轮被替换下来的原图（头发卷度不足），文件只作前后对照，不再出图"
+    },
+    {
+      "name": "round2/dafeiyu-work-lit",
+      "size": "2048x1152",
+      "refs": [
+        "raw/dafeiyu-work-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character sitting at the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "note": "第 2 轮被替换下来的原图，不再出图"
+    },
+    {
+      "name": "cover-rain-whale",
+      "round": 4,
+      "size": "1024x1024",
+      "refs": [],
+      "prompt": "Square music album cover art: a small deep-blue whale swimming through a rainy night sky above a sleeping city, a big pale moon behind it, soft rain streaks and blurred warm city bokeh below, dreamy lo-fi mood, deep blue and soft amber palette. Japanese hand-drawn anime illustration with painterly shading. No people, no text, no letters, no logo."
+    },
+    {
+      "name": "cover-moonlight",
+      "round": 4,
+      "size": "1024x1024",
+      "refs": [],
+      "prompt": "Square music album cover art: a window with blue curtains open to a huge pale moon, a mug and a cassette tape on the sill, rain drops on the glass, calm late-night lo-fi mood, indigo and silver-blue palette. Japanese hand-drawn anime illustration with painterly shading. No people, no text, no letters, no logo."
+    },
+    {
+      "name": "round2/dafeiyu-game-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-work-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her pose: she is excitedly playing a video game on the open laptop, sitting on the same swivel chair at the same desk, turned about a quarter toward the left so her cheek line and the side of her face are slightly visible in profile from behind, leaning forward eagerly, both hands holding a white game controller in front of her chest instead of typing, her elbows raised, her whale tail curled up lively and lifted behind the chair instead of hanging down. The hoodie on the chair back stays. Keep the open laptop exactly where it is, with the whole glowing screen clearly visible and not covered by her head, keep her hair, headdress, whale-fin ears and outfit, the room, camera, desk lamp OFF and all lighting exactly the same as the first image. {style}",
+      "note": "第 2 轮被替换下来的原图（头发偏直），文件只作前后对照，不再出图"
+    },
+    {
+      "name": "round2/dafeiyu-game-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-game-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character near the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the controller, the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "note": "第 2 轮被替换下来的原图，不再出图"
+    }
+  ]
+}
