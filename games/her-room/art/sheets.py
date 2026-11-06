@@ -60,3 +60,6 @@ for s in NAMES:
     for k in ('off', 'lit'):
         h, n = hue(O(f'dafeiyu-{s}-{k}').crop(CH[s])); res['hairHue'][f'{s}-{k}'] = {'hue': h, 'deltaFromSheet': round(h - ref, 1), 'pixels': n}
 json.dump(res, open('out/consistency.json', 'w'), indent=1, ensure_ascii=False); print(json.dumps(res['hairHue'], ensure_ascii=False)[:1500]); print('sheet', ref, 'maxStatic', max(max(v.values()) for v in res['staticDiffAfter'].values()))
+
+over = {k: v['deltaFromSheet'] for k, v in res['hairHue'].items() if abs(v['deltaFromSheet']) > 12}
+print('hue over 12°:', over or 'none')

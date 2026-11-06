@@ -165,12 +165,13 @@
     {
       "name": "dafeiyu-game-off",
       "size": "2048x1152",
-      "round": 3,
+      "round": 4,
       "refs": [
-        "raw/dafeiyu-work-off.png",
-        "raw/dafeiyu-sheet.png"
+        "raw/round2/dafeiyu-game-off.png",
+        "raw/dafeiyu-sheet.png",
+        "raw/dafeiyu-work-off.png"
       ],
-      "prompt": "Edit the first image. Change only her pose: she is excitedly playing a video game on the open laptop, sitting on the same swivel chair at the same desk, turned about a quarter toward the left so her cheek line and the side of her face are slightly visible in profile from behind, leaning forward eagerly, both hands holding a white game controller in front of her chest instead of typing, her elbows raised, her whale tail curled up lively and lifted behind the chair instead of hanging down. The hoodie on the chair back stays. Keep the open laptop exactly where it is, with the whole glowing screen clearly visible and not covered by her head, keep her hair, headdress, whale-fin ears and outfit, the room, camera, desk lamp OFF and all lighting exactly the same as the first image. {style}"
+      "prompt": "Edit the first image. Change ONLY her hair: her long royal-blue hair must be voluminous and wavy with big soft S-shaped curls and ringlets down to her hips, in distinct curling locks with visible strand lines and highlights, exactly like the hair on the second image (character sheet) and the curly hair in the third image; keep the one curled ahoge on top. {character} Keep her pose, her face in profile, both hands holding the white game controller, headdress, whale-fin ears, apron bow, the lifted tail, the open laptop and its screen, the hoodie on the chair back, the room, camera, desk lamp OFF and all lighting exactly the same as the first image; change nothing else. {style}"
     },
     {
       "name": "dafeiyu-stand-off",
@@ -215,7 +216,7 @@
     {
       "name": "dafeiyu-game-lit",
       "size": "2048x1152",
-      "round": 3,
+      "round": 4,
       "refs": [
         "raw/dafeiyu-game-off.png",
         "raw/dafeiyu-base-lit.png"
@@ -325,6 +326,28 @@
       "size": "1024x1024",
       "refs": [],
       "prompt": "Square music album cover art: a window with blue curtains open to a huge pale moon, a mug and a cassette tape on the sill, rain drops on the glass, calm late-night lo-fi mood, indigo and silver-blue palette. Japanese hand-drawn anime illustration with painterly shading. No people, no text, no letters, no logo."
+    },
+    {
+      "name": "round2/dafeiyu-game-off",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-work-off.png",
+        "raw/dafeiyu-sheet.png"
+      ],
+      "prompt": "Edit the first image. Change only her pose: she is excitedly playing a video game on the open laptop, sitting on the same swivel chair at the same desk, turned about a quarter toward the left so her cheek line and the side of her face are slightly visible in profile from behind, leaning forward eagerly, both hands holding a white game controller in front of her chest instead of typing, her elbows raised, her whale tail curled up lively and lifted behind the chair instead of hanging down. The hoodie on the chair back stays. Keep the open laptop exactly where it is, with the whole glowing screen clearly visible and not covered by her head, keep her hair, headdress, whale-fin ears and outfit, the room, camera, desk lamp OFF and all lighting exactly the same as the first image. {style}",
+      "note": "第 2 轮被替换下来的原图（头发偏直），文件只作前后对照，不再出图"
+    },
+    {
+      "name": "round2/dafeiyu-game-lit",
+      "size": "2048x1152",
+      "round": 3,
+      "refs": [
+        "raw/dafeiyu-game-off.png",
+        "raw/dafeiyu-base-lit.png"
+      ],
+      "prompt": "Edit the first image. Relight it with the desk lamp turned ON exactly like the second image: warm amber light from the lamp over the desk, wall, books and nearby floor, and the character near the desk is warmly lit on her hair, headdress and shoulders by the lamp; the bed and window side keep their blue moonlight. Keep the character (pose, hair, outfit), the controller, the open laptop and its screen, the room, camera and every object exactly the same as the first image; only the lighting changes. {style}",
+      "note": "第 2 轮被替换下来的原图，不再出图"
     }
   ]
 }

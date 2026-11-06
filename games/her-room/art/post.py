@@ -19,6 +19,9 @@ LAMP = (1300, 0, 1920, 700); FAR = (150, 380, 1250, 1080)
 # 每个状态允许变化的范围：床上的状态只改床和她，书桌的状态只改书桌、椅子和她；范围外逐像素取底版
 BED = (60, 230, 1400, 1080); DESK = (1130, 200, 1920, 1080)
 ROI = {'idle': BED, 'idle-lazy': BED, 'phone': BED, 'music': BED, 'sleep': BED, 'work': DESK, 'game': DESK, 'stand': DESK}
+# 暖光时要保护蓝色的范围。床上的状态她躺在蓝床单上，变化遮罩会把床单也算进去（留下蓝色色块），所以用人工标注的椭圆只框头发和身体
+# [(cx, cy, rx, ry)…]，世界坐标；书桌的状态背景不是蓝的，直接用变化遮罩
+HAIR = {'idle': [(800, 630, 200, 330)], 'idle-lazy': [(800, 640, 200, 330)], 'phone': [(470, 650, 170, 130), (720, 720, 230, 110)], 'music': [(560, 500, 210, 220)], 'sleep': [(530, 590, 230, 130)]}
 THRESH = 20; MIN_AREA = 700; GROW = 19; FEATHER = 13
 def raw(n): return f'raw/{n}.png' if os.path.exists(f'raw/{n}.png') else f'raw/{n}.webp'
 def load(n): return cv2.resize(cv2.imread(raw(n), cv2.IMREAD_COLOR), (W, H), interpolation=cv2.INTER_AREA)
@@ -41,6 +44,12 @@ def change_mask(im, base, roi):
     keep[WIN > 0] = 0
     x0, y0, x1, y1 = roi; box = np.zeros_like(keep); box[y0:y1, x0:x1] = 255; keep = cv2.bitwise_and(keep, box)
     return cv2.dilate(keep, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (GROW, GROW)))
+def subject_mask(state, hard):
+    if state not in HAIR: return cv2.GaussianBlur(hard, (0, 0), FEATHER).astype(np.float32) / 255
+    m = np.zeros((H, W), np.uint8)
+    for cx, cy, rx, ry in HAIR[state]: cv2.ellipse(m, (cx, cy), (rx, ry), 0, 0, 360, 255, -1)
+    # 和变化遮罩取交集：头顶旁边的蓝墙没被她动过，不算她
+    return cv2.GaussianBlur(cv2.bitwise_and(m, cv2.erode(hard, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (27, 27)))), (0, 0), 7).astype(np.float32) / 255
 def composite(im, base, roi):
     hard = change_mask(im, base, roi)
     a = cv2.GaussianBlur(hard, (0, 0), FEATHER).astype(np.float32)[..., None] / 255
@@ -58,7 +67,8 @@ if __name__ == '__main__':
             if not os.path.exists(raw(n)): print('missing', n); continue
             im = load(n); out, hard = composite(im, base[k], ROI[s]); ref = base[k]
             if k == 'lit':
-                out = warm(out, subject=cv2.GaussianBlur(hard, (0, 0), FEATHER).astype(np.float32) / 255); ref = warmed_base
+                sub = subject_mask(s, hard)
+                out = warm(out, subject=sub); ref = warmed_base
             cv2.imwrite(f'out/{n}.webp', out, [cv2.IMWRITE_WEBP_QUALITY, 88])
             ys, xs = np.where(hard > 0)
             report['mask'][n] = {'percent': round(float((hard > 0).mean() * 100), 1), 'bbox': [int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())] if len(xs) else None}
