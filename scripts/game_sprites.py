@@ -17,6 +17,18 @@ can name them. `build` reads games/<id>/art/layout.json:
 and writes <pack-dir>/terrain.webp, <pack-dir>/atlas.webp (every sprite, shelf-packed, 2 px apart) and
 <pack-dir>/sprites.json ({ name: { x, y, w, h } } in atlas px). Scaling is a box filter (no blur from
 over-sampling), the alpha is cut hard at 50% and magenta left on the edges is pulled back to the neighbours.
+
+A game with several sets of pictures (像素房间: one per room theme) lists them under "sets"; each set is a layout
+like the one above plus a file-name prefix, and may have an opaque "background" instead of (or with) a terrain:
+
+Any sprite may add "pad": [left, top, right, bottom] (transparent px after scaling), e.g. a bed's foot board
+padded to the bed's width so both are drawn at the same x, y.
+
+  { "sets": [ { "prefix": "dafeiyu-",
+                "background": { "sheet": "dafeiyu-room", "scale": 0.5, "key": "none", "out": "room" },  # → dafeiyu-room.webp
+                "sprites": { … } } ] }                                    # → dafeiyu-atlas.webp + dafeiyu-sprites.json
+
+After packing, an atlas that still has magenta-ish opaque pixels (a badly keyed sheet) fails the build (exit 1).
 Needs Pillow and numpy.
 """
 import json
@@ -31,6 +43,12 @@ from PIL import Image
 def magenta_mask(a):
     r, g, b = a[..., 0].astype(int), a[..., 1].astype(int), a[..., 2].astype(int)
     return (r > 150) & (b > 150) & (g < 120) & (np.abs(r - b) < 90)
+
+
+def near_magenta(a):
+    # what is left of the #FF00FF background after keying (pinks and purples in the art are not this close)
+    r, g, b = a[..., 0].astype(int), a[..., 1].astype(int), a[..., 2].astype(int)
+    return (r > 200) & (b > 200) & (g < 70)
 
 
 def key_sheet(im, key="magenta"):
@@ -153,22 +171,47 @@ def main():
             sheets[(name, key)] = key_sheet(src(name), key)
         return sheets[(name, key)]
 
-    t = layout["terrain"]
-    terr = src(t["sheet"]).convert("RGBA")
-    if t.get("key"):
-        terr = key_sheet(terr, t["key"])
-    terr = scale_sprite(terr, t.get("scale", 1))
-    terr.save(os.path.join(dest, "terrain.webp"), "WEBP", lossless=True, method=6)
-    sprites = {}
-    for name, spec in layout["sprites"].items():
-        x, y, w, h = spec["box"]
-        im = sheet(spec["sheet"], spec.get("key", "magenta")).crop((x, y, x + w, y + h))
-        sprites[name] = trim(scale_sprite(trim(im), spec["scale"]))
-    atlas, boxes = pack(sprites)
-    atlas.save(os.path.join(dest, "atlas.webp"), "WEBP", lossless=True, method=6)
-    json.dump(boxes, open(os.path.join(dest, "sprites.json"), "w"), indent=1, sort_keys=True)
-    print(f"terrain {terr.size}  atlas {atlas.size}  sprites {len(boxes)}")
+    def whole(t):
+        im = src(t["sheet"]).convert("RGBA")
+        if t.get("key") and t["key"] != "none":
+            im = key_sheet(im, t["key"])
+        return scale_sprite(im, t.get("scale", 1))
 
+    bad = 0
+    for st in layout.get("sets", [layout]):
+        prefix = st.get("prefix", "")
+        made = []
+        if "terrain" in st:
+            terr = whole(st["terrain"])
+            terr.save(os.path.join(dest, prefix + "terrain.webp"), "WEBP", lossless=True, method=6)
+            made.append(f"terrain {terr.size}")
+        if "background" in st:
+            b = st["background"]
+            bg = whole(b).convert("RGB")
+            bg.save(os.path.join(dest, prefix + b.get("out", "room") + ".webp"), "WEBP", lossless=True, method=6)
+            made.append(f"{prefix}{b.get('out', 'room')} {bg.size}")
+        sprites = {}
+        for name, spec in st["sprites"].items():
+            x, y, w, h = spec["box"]
+            im = sheet(spec["sheet"], spec.get("key", "magenta")).crop((x, y, x + w, y + h))
+            sprites[name] = trim(scale_sprite(trim(im), spec["scale"]))
+            if spec.get("pad"):  # [left, top, right, bottom] transparent px, so a layer lines up with another sprite
+                l, t_, r, b = spec["pad"]
+                c = Image.new("RGBA", (sprites[name].width + l + r, sprites[name].height + t_ + b), (0, 0, 0, 0))
+                c.paste(sprites[name], (l, t_))
+                sprites[name] = c
+        atlas, boxes = pack(sprites)
+        atlas.save(os.path.join(dest, prefix + "atlas.webp"), "WEBP", lossless=True, method=6)
+        json.dump(boxes, open(os.path.join(dest, prefix + "sprites.json"), "w"), indent=1, sort_keys=True)
+        a = np.array(atlas)
+        left = int((near_magenta(a) & (a[..., 3] > 0)).sum())
+        if left:
+            bad += left
+            print(f"{prefix}atlas: {left} opaque magenta px left", file=sys.stderr)
+        made.append(f"{prefix}atlas {atlas.size}  sprites {len(boxes)}  magenta {left}")
+        print("  ".join(made))
+    if bad:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
