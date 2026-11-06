@@ -10,14 +10,15 @@
 
 ```bash
 python3 generate.py [名字…]     # 出图：一次一张，已有的跳过，--force 重出。raw/ 提交前转无损 WebP
-python3 post.py                 # raw → out：和底版合成，out/post-report.json
+python3 post.py                 # raw → out：和底版合成，开灯（warm.py），out/post-report.json
 python3 bokeh.py                # out/bokeh-spots.json：窗户里画好的灯位
 python3 blink.py                # out/blink/*.png、out/blink.json：只裁眼睛（框在 blink-eyes.json）
 python3 clips.py gen && python3 clips.py atlas   # 短视频：raw/clips/*.mp4 → out/dafeiyu-clips.webp + .json（视频模型，抽帧）
 python3 web_pages.py <chromium>  # 封面 + 网页 web/rain-notes.html 用真实浏览器渲染成长图
 python3 screens.py              # preview/screens.jpg：屏幕四角叠框核对（标注在 screens.json）
 python3 build_pack.py           # manifest.src.json + out → ../pack
-python3 sheets.py               # preview/*.jpg、out/consistency.json
+python3 sheets.py               # preview/*.jpg（含 lit-vs-ref.jpg）、preview/lighting-check.json、out/consistency.json、../cover.webp
+python3 store_shots.py <应用仓库>/out/e2e/illustrated-room  # ../screenshots（先跑应用的 e2e illustrated）
 node ../../../tools/game-pack.js ../pack
 ```
 
@@ -48,5 +49,5 @@ node ../../../tools/game-pack.js ../pack
 
 - 所有状态的静止部分逐像素取底版（`post.py`）：差异大的区域（她、被她动过的东西）留状态图，窗户内和 ROI 外一律取底版，交叉淡化时只有她在变。探针时窗户区差 7.5/255，现在 ≤ 0.42，全部静止区域 ≤ 2.92。
 - 眨眼贴片：编辑图平移对齐到状态图，整体明暗对齐，四周羽化 6 px。off / lit 共用一个框，引擎按台灯亮度混合。
-- 整屋变暖（`warm.py`）：模型只把台灯附近画暖了，合成后给所有 lit 图和 lit 贴片叠同一张按距离衰减的暖光图；窗玻璃留冷色，她身上蓝色的部分（头发、裙子、尾巴）受光量打折，蓝发不被洗掉，皮肤和围裙照常受光；床上状态的范围是 `post.py` 里人工标注的椭圆和变化遮罩的交集。
+- 开灯（`warm.py`，1.0.1 重做）：lit 图从 off 图出发，床这边按「反射率 × 灯色 × 受光量」物理打光，蓝床单、蓝头发受暖光还是蓝的；灯边（书桌、墙、地板）按受光量渐变到模型画的 lit 图，暖光从灯往外渐隐。她的轮廓由 `post.py` 用 GrabCut 求，只用来加她迎光一侧的光（书桌状态下让她整个人用 lit 图）；床和背景不按她抠遮罩，所以没有光晕。闭眼贴片的 lit 版也从 off 贴片打光，`raw/*-blink-lit` 不再用。
 - 屏幕四角避开手和头：engine 的屏幕网格盖在插画上，没有前景遮挡层，所以四边形收到不盖住她的位置。

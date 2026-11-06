@@ -28,7 +28,7 @@
 | 光斑位置（在底版窗户里找到的 28 盏灯） | 无单独素材，引擎画径向渐变 | `window.bokeh.spots [[x, y, r, warm]…]` |
 | 雨丝、水珠 | 引擎画 | `window.rain` |
 | 台灯光晕 | 引擎画 | `lighting.lamp.glow` |
-| 整屋暖光 | 烘焙进所有 lit 图（`warm.py`） | `states.<id>.images.lit` |
+| 开灯的光照 | 烘焙进所有 lit 图（`warm.py`：床保持蓝色，暖光从灯向外渐隐） | `states.<id>.images.lit` |
 
 ## 屏幕内容
 

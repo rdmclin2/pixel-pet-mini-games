@@ -63,3 +63,32 @@ json.dump(res, open('out/consistency.json', 'w'), indent=1, ensure_ascii=False);
 
 over = {k: v['deltaFromSheet'] for k, v in res['hairHue'].items() if abs(v['deltaFromSheet']) > 12}
 print('hue over 12°:', over or 'none')
+
+# 开灯帧和参考录屏的开灯帧并排（床上的状态对参考第 2 行第 3 张，书桌的状态对第 4 行第 2 张）
+REF_BED, REF_DESK = tile(1, 2), tile(3, 1)
+cells = []
+for s, n in NAMES.items():
+    desk = s in ('work', 'game', 'stand')
+    cells += [(REF_DESK if desk else REF_BED, f'参考开灯帧（{"书桌" if desk else "床上"}）'), (O(f'dafeiyu-{s}-lit'), f'1.0.1 {n} · 台灯开')]
+grid(cells, 4, 640, 360, '开灯帧 vs 参考录屏的开灯帧').save('preview/lit-vs-ref.jpg', quality=88)
+# 逐状态的光照数值：床左半是否还是饱和的蓝、暖光是否从灯往外渐隐、她身边有没有光晕
+BOX = {'bed-left': (120, 620, 520, 1000), 'bed-edge': (1200, 560, 1330, 720), 'desk': (1400, 230, 1800, 480), 'desk-wall': (1250, 60, 1450, 200), 'floor': (1400, 850, 1560, 1000), 'left-wall': (20, 120, 240, 400)}
+def box_stats(im, b):
+    c = np.asarray(im.crop(b)).astype(np.float32); r, g, bl = c[..., 0], c[..., 1], c[..., 2]
+    mx, mn = c.max(axis=2), c.min(axis=2)
+    return {'sat': round(float(((mx - mn) / np.maximum(mx, 1)).mean()), 2), 'R-B': round(float((r - bl).mean()), 1), 'luma': round(float(c.mean()), 1)}
+import cv2
+bo, bl = np.asarray(O('dafeiyu-base-off')).astype(np.float32), np.asarray(O('dafeiyu-base-lit')).astype(np.float32)
+check = {}
+for s, n in NAMES.items():
+    off, lit = O(f'dafeiyu-{s}-off'), O(f'dafeiyu-{s}-lit')
+    sub = (cv2.imread(f'out/subject-{s}.png', cv2.IMREAD_GRAYSCALE) > 127).astype(np.uint8)
+    # 轮廓外 8–48 px 这一圈：开灯带来的变化和空房间的差多少。贴着她多出来的光晕或色块会让这个数变大
+    ring = (cv2.dilate(sub, np.ones((97, 97), np.uint8)) > 0) & (cv2.dilate(sub, np.ones((17, 17), np.uint8)) == 0)
+    halo = np.abs((np.asarray(lit).astype(np.float32) - np.asarray(off).astype(np.float32)) - (bl - bo)).max(axis=2)[ring]
+    check[s] = {'lit': {k: box_stats(lit, b) for k, b in BOX.items()}, 'off-bed-left': box_stats(off, BOX['bed-left']), 'halo-ring-mean(0-255)': round(float(halo.mean()), 2), 'halo-ring-p99': round(float(np.percentile(halo, 99)), 1), 'hairHue-lit': res['hairHue'][f'{s}-lit']['hue'], 'hairHue-off': res['hairHue'][f'{s}-off']['hue']}
+json.dump(check, open('preview/lighting-check.json', 'w'), indent=1, ensure_ascii=False)
+for s, v in check.items(): print(s, 'bed-left sat', v['lit']['bed-left']['sat'], 'R-B', v['lit']['bed-left']['R-B'], '| bed-edge R-B', v['lit']['bed-edge']['R-B'], '| desk R-B', v['lit']['desk']['R-B'], 'wall', v['lit']['desk-wall']['R-B'], 'floor', v['lit']['floor']['R-B'], '| halo', v['halo-ring-mean(0-255)'], 'p99', v['halo-ring-p99'], '| hair', v['hairHue-off'], '→', v['hairHue-lit'])
+# 商店封面：看手机 · 开灯的画面，裁成 16:10
+c = O('dafeiyu-phone-lit'); h = 400; w = round(c.width * h / c.height); c = c.resize((w, h), Image.LANCZOS); x = (w - 640) // 2
+c.crop((x, 0, x + 640, h)).save('../cover.webp', quality=86, method=6)

@@ -5,7 +5,7 @@ EYES 是每个状态两只眼睛的外接框（人工标注，世界坐标），
 """
 import json, os
 import numpy as np, cv2
-from warm import warm
+from warm import relight
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 W, H = 1920, 1080
 EYES = json.load(open('blink-eyes.json'))
@@ -29,8 +29,8 @@ def main():
         a = np.zeros((h, w), np.float32); a[6:h - 6, 6:w - 6] = 1; a = cv2.GaussianBlur(a, (0, 0), 3); a = np.clip(a * 1.0, 0, 1)
         e = {'at': [x0, y0], 'size': [w, h]}
         for k in ('off', 'lit'):
-            ref = cv2.imread(f'out/dafeiyu-{s}-{k}.webp'); b = load(f'dafeiyu-{s}-blink-{k}')
-            if k == 'lit': b = warm(b, subject=1.0)  # 和 post.py 烘焙进 lit 状态图的是同一层暖光
+            ref = cv2.imread(f'out/dafeiyu-{s}-{k}.webp'); b = load(f'dafeiyu-{s}-blink-off')
+            if k == 'lit': b = relight(b, subject=cv2.imread(f'out/subject-{s}.png', cv2.IMREAD_GRAYSCALE).astype(np.float32) / 255)  # 和 post.py 的 lit 状态图同一个打光：闭眼图也从 off 打光（raw/*-blink-lit 不再用）
             b = shift_to(b, ref, box)
             cut = b[y0:y1, x0:x1].astype(np.float32)
             # 贴片的整体明暗对齐状态图（编辑时整张图可能轻微变色），只保留眼睛的改动

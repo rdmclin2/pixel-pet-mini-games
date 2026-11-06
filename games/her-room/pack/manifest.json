@@ -4,7 +4,7 @@
   "engine": "illustrated-room@1",
   "id": "her-room",
   "name": "她的房间",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "深夜下雨的房间里，大肥鱼趴在床上刷手机、坐在床边发呆犯懒、坐到书桌前用电脑、戴着耳机听歌、握着手柄打游戏、盖着被子睡觉。在聊天里叫她做什么，她就去做。",
   "credit": "美术：GPT Image（gpt-image-2.5）；玩法与引擎：Pixel Pet Affection",
   "defaultRoom": "dafeiyu",
@@ -74,7 +74,7 @@
       "character": "dafeiyu",
       "status": "open",
       "name": "鲸鱼女仆的雨夜小屋",
-      "blurb": "深夜、下雨、蓝色月光，台灯一开整屋都暖起来。",
+      "blurb": "深夜、下雨、蓝色月光，台灯一开，书桌这边暖起来，床还在月光里。",
       "palette": {
         "primary": "#2C4A8A",
         "accent": "#6FA8E8",
@@ -94,8 +94,8 @@
             150
           ],
           "glow": {
-            "r": 620,
-            "alpha": 0.3,
+            "r": 470,
+            "alpha": 0.2,
             "color": "#FFC46E"
           },
           "rampOn": 0.17,
@@ -105,7 +105,8 @@
         "grade": {
           "saturation": 0.96,
           "tint": "#B8C8FF",
-          "vignette": 0.38
+          "vignette": 0.38,
+          "litTint": "#F2ECFF"
         }
       },
       "window": {
