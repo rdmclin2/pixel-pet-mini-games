@@ -69,7 +69,7 @@ REF_BED, REF_DESK = tile(1, 2), tile(3, 1)
 cells = []
 for s, n in NAMES.items():
     desk = s in ('work', 'game', 'stand')
-    cells += [(REF_DESK if desk else REF_BED, f'参考开灯帧（{"书桌" if desk else "床上"}）'), (O(f'dafeiyu-{s}-lit'), f'1.0.1 {n} · 台灯开')]
+    cells += [(REF_DESK if desk else REF_BED, f'参考开灯帧（{"书桌" if desk else "床上"}）'), (O(f'dafeiyu-{s}-lit'), f'1.0.2 {n} · 台灯开')]
 grid(cells, 4, 640, 360, '开灯帧 vs 参考录屏的开灯帧').save('preview/lit-vs-ref.jpg', quality=88)
 # 逐状态的光照数值：床左半是否还是饱和的蓝、暖光是否从灯往外渐隐、她身边有没有光晕
 BOX = {'bed-left': (120, 620, 520, 1000), 'bed-edge': (1200, 560, 1330, 720), 'desk': (1400, 230, 1800, 480), 'desk-wall': (1250, 60, 1450, 200), 'floor': (1400, 850, 1560, 1000), 'left-wall': (20, 120, 240, 400)}

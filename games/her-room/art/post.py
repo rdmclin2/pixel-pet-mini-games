@@ -24,6 +24,34 @@ BODY = {'idle': [(780, 660, 230, 370)], 'idle-lazy': [(780, 660, 230, 370)], 'ph
 BODY_BOX = {'work': (1330, 250, 1810, 890), 'game': (1270, 250, 1790, 890), 'stand': (1180, 480, 1680, 1060)}
 SUBJECT_DIFF = 14
 THRESH = 20; MIN_AREA = 700; GROW = 19; FEATHER = 13
+# 睡觉状态露出被子的尾鳍（世界坐标，人工描边，贴着线稿内侧）：模型把它画得偏灰紫、白边太宽，开灯后又被床沿的暖光洗成灰白。1.0.2 按看手机状态的尾鳍重新上色（亮度直方图匹配 + 取色），开灯时只按固有色受一点光
+FIN_SLEEP = [[[1086, 645], [1105, 605], [1135, 582], [1175, 574], [1167, 625], [1155, 660], [1120, 657], [1098, 652]], [[1098, 667], [1120, 657], [1150, 665], [1170, 695], [1177, 752], [1145, 730], [1110, 700]]]
+FIN_REF = [[698, 362], [735, 362], [795, 390], [805, 355], [840, 320], [880, 314], [877, 350], [860, 400], [825, 432], [795, 442], [750, 435], [715, 415]]  # 看手机状态的尾鳍
+FIN_LIT = 0.25
+def poly_mask(polys, blur=1.0):
+    m = np.zeros((H, W), np.uint8)
+    for p in polys: cv2.fillPoly(m, [np.array(p, np.int32)], 255)
+    return cv2.GaussianBlur(m, (0, 0), blur).astype(np.float32) / 255
+def fin_recolor(off, ref):
+    """off 的尾鳍 → 同样的明暗结构，用 ref（看手机状态）尾鳍的颜色：按亮度分位数对应"""
+    from warm import lin
+    a = poly_mask(FIN_SLEEP); hard = a > 0.5
+    rm = poly_mask([FIN_REF], 0.5) > 0.9
+    luma = lambda im: im[..., 0] * 0.114 + im[..., 1] * 0.587 + im[..., 2] * 0.299
+    rp = ref[rm].astype(np.float32); ro = np.argsort(luma(rp)); rp = rp[ro]
+    sl = luma(off.astype(np.float32)); rank = np.argsort(np.argsort(sl[hard]))
+    out = off.astype(np.float32).copy()
+    out[hard] = rp[(rank * (len(rp) - 1) / max(1, hard.sum() - 1)).astype(int)]
+    # 分位对应是逐像素的，上色后轻微模糊掉噪点，线稿不在这个范围里
+    out = cv2.GaussianBlur(out, (0, 0), 0.8)
+    return (out * a[..., None] + off * (1 - a[..., None])).round().astype(np.uint8)
+def fin_lit(lit, off_fixed):
+    """开灯：线性空间里 固有色（off ÷ 月光）× 灯色 × 固定受光量，蓝的还是蓝的、白边微暖"""
+    from warm import lin, srgb, MOON_RGB, LAMP_RGB
+    a = poly_mask(FIN_SLEEP)[..., None]
+    l = lin(off_fixed)[..., ::-1]
+    f = srgb(l + np.clip(l / MOON_RGB, 0, 1) * LAMP_RGB * FIN_LIT)[..., ::-1].astype(np.float32)
+    return (f * a + lit * (1 - a)).round().astype(np.uint8)
 def raw(n): return f'raw/{n}.png' if os.path.exists(f'raw/{n}.png') else f'raw/{n}.webp'
 def load(n): return cv2.resize(cv2.imread(raw(n), cv2.IMREAD_COLOR), (W, H), interpolation=cv2.INTER_AREA)
 def crop(im, b): x0, y0, x1, y1 = b; return im[y0:y1, x0:x1].astype(np.float32)
@@ -86,7 +114,11 @@ if __name__ == '__main__':
         im = load(n); off, hard = composite(im, base['off'], ROI[s])
         lit_src, hard_lit = composite(load(f'dafeiyu-{s}-lit'), base['lit'], ROI[s])
         sub = subject_mask(s, off, base['off'])
+        if s == 'sleep':
+            ref_off, _ = composite(load('dafeiyu-phone-off'), base['off'], ROI['phone'])
+            off = fin_recolor(off, ref_off)
         lit = relight(off, lit_src, sub, subject_lit=s in BODY_BOX)
+        if s == 'sleep': lit = fin_lit(lit, off)
         cv2.imwrite(f'out/{n}.webp', off, [cv2.IMWRITE_WEBP_QUALITY, 88])
         cv2.imwrite(f'out/dafeiyu-{s}-lit.webp', lit, [cv2.IMWRITE_WEBP_QUALITY, 88])
         cv2.imwrite(f'out/subject-{s}.png', (sub * 255).astype(np.uint8))
