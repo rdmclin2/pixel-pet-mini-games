@@ -7,6 +7,7 @@
 | [像素小院](games/pixel-yard) | 见 [`catalog.json`](catalog.json) | 一座漂在空中的等距像素小院：她自己逛、种菜、摘浆果、抓萤火虫；时段和天气可调；每天三件小事，完成加好感 |
 | [她的房间](games/her-room) | 1.0.2（需要应用 0.28.0，引擎 `illustrated-room@1`） | 日系手绘插画的深夜房间：下雨、蓝色月光、台灯开关。她有七个专门画的姿势，在聊天里叫她做什么，她就去做。本版开放大肥鱼的「鲸鱼女仆的雨夜小屋」 |
 | [像素房间](games/pixel-room) | 1.0.0（需要应用 0.28.0，引擎 `room@1`） | 每位角色一间自己风格的房间：陪她睡觉、工作、看手机、听音乐、打游戏。本版开放大肥鱼的「鲸鱼女仆的蓝色小屋」，另外四间即将开放 |
+| [海边露台](games/seaside-terrace) | 1.0.1（**壁纸**，需要应用 0.29.0，引擎 `wallpaper@1`） | 第一张动态壁纸：海边的白色屋顶露台，她住在桌面背景里自己散步、坐长椅、看海，夜里在长椅上睡着；白天晴空和飘过的云，夜里星空、月光和灯串。桌面图标和窗口都在她上面，按 Ctrl+Alt+P 叫她出来 |
 
 「像素房间」开发时叫「她的房间」，上架前改了名（id `pixel-room`）；「她的房间」这个名字和 `her-room` 这个 id 现在是插画风新游戏。
 
@@ -28,7 +29,10 @@ catalog.json       商店目录：应用从这里得知有哪些游戏、最新�
 scripts/           build.js（打包）· publish.js（上传 CDN）· game_sprites.py（切图）· generate.sh（生成原图）
 tools/game-pack.js 小游戏包格式校验（与应用一致）：node tools/game-pack.js games/<id>
 tools/illustrated-room-pack.js 她的房间格式校验（应用 src/core/illustrated-room-pack.js 的副本）
+tools/wallpaper-pack.js 壁纸格式校验（wallpaper@1，按应用 docs/wallpaper-mode.md §3 写，是打包前的第一道检查；应用的 src/core/wallpaper-pack.js 更严，以它为准：在应用仓库跑 node scripts/check-store-contract.js <本仓库> --cdn）· node --test tools/ 跑校验的测试
 ```
+
+「海边露台」是**壁纸**（`kind: "wallpaper"`、引擎 `wallpaper@1`）：`pack/` 里是 `manifest.json`、`preview.webp` 和几张整幅图层（天空、云、露台，白天和夜里各一套），没有精灵图集；美术源在 `art/`（`prompts.json`、`post.py`，说明见 `art/README.md`）。商店目录里它和小游戏一样是 `type: "game"` 条目，旧版应用不认识这个引擎，会显示「需要更新应用」。格式见应用仓库的 `docs/wallpaper-mode.md` §3。发布步骤（校验 → `node scripts/build.js` → `node scripts/publish.js` → 推送 `catalog.json`）、在应用里安装和设为壁纸、e2e 复现命令见应用仓库 [`docs/wallpaper-mode.md` 的「快速开始」](https://github.com/rdmclin2/lobehub-pixel-pet-affection/blob/feat/t-13651-wallpaper-mode-design/docs/wallpaper-mode.md#快速开始t-13674)。
 
 「像素房间」（`room@1`）的包按主题给文件名加前缀（`dafeiyu-room.webp`、`dafeiyu-atlas.webp`、`dafeiyu-sprites.json`），一个主题一套；`layout.json` 用 `sets` 列出每套，见 `scripts/game_sprites.py` 开头的说明。格式见应用仓库的 `docs/her-room-design.md`。
 

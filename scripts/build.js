@@ -80,6 +80,8 @@ function main() {
       changelog: notes(id, m.version),
       file, bytes: fs.statSync(zip).size, sha256: sha256(zip),
     };
+    // a wallpaper (wallpaper@1) has its own cap in the store, below the 200 MB every pack has (docs/wallpaper-mode.md §3.3)
+    if (m.engine === 'wallpaper@1' && entry.bytes > 120 * 1024 * 1024) throw new Error(`${id}: ${file} is ${entry.bytes} bytes (a wallpaper is at most 120 MB)`);
     const was = catalog.games.find((g) => g.id === id);
     if (was && was.version === entry.version && was.sha256 !== entry.sha256) {
       if (CHECK) throw new Error(`${id} ${entry.version}: the archive differs from catalog.json (run node scripts/build.js)`);

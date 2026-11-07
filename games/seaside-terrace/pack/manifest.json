@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "kind": "wallpaper",
+  "engine": "wallpaper@1",
+  "id": "seaside-terrace",
+  "name": "海边露台",
+  "version": "1.0.1",
+  "description": "海边一座刷白的屋顶露台：赤陶地砖、浅蓝靠垫的长椅、马赛克小圆桌、柠檬树和薰衣草，矮墙外是海和带灯塔的小岛。设为壁纸后她住在露台上，自己散步、坐长椅、靠墙看海，夜里在长椅上睡着；白天晴空和云，夜里星空、月光和灯串。",
+  "credit": "美术：GPT Image（gpt-image-2.5）；壁纸引擎：Pixel Pet Affection",
+  "canvas": { "width": 2560, "height": 1440, "background": "#2a5d9c", "fit": "cover", "focus": [0.5, 0.7] },
+  "preview": "preview.webp",
+  "layers": [
+    { "id": "sky-day", "image": "sky-day.webp", "z": 0, "phases": ["dawn", "day", "dusk"] },
+    { "id": "sky-night", "image": "sky-night.webp", "z": 0, "phases": ["night"] },
+    { "id": "clouds", "image": "clouds.webp", "z": 5, "drift": [6, 0], "loop": true, "opacity": 0.85, "phases": ["dawn", "day", "dusk"] },
+    { "id": "terrace-day", "image": "terrace-day.webp", "z": 10, "phases": ["dawn", "day", "dusk"] },
+    { "id": "terrace-night", "image": "terrace-night.webp", "z": 10, "phases": ["night"] }
+  ],
+  "sky": { "phases": true, "weather": ["clear", "cloudy", "rain"], "tint": true },
+  "fx": {
+    "rain": true,
+    "lights": [
+      { "x": 202, "y": 61, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 407, "y": 115, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 640, "y": 160, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 900, "y": 189, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 1172, "y": 205, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 1422, "y": 205, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 1687, "y": 192, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 1916, "y": 166, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 2148, "y": 128, "r": 70, "phases": ["dusk", "night"] },
+      { "x": 2364, "y": 79, "r": 70, "phases": ["dusk", "night"] }
+    ]
+  },
+  "pet": {
+    "height": 300,
+    "speed": 70,
+    "spawn": [1280, 1200],
+    "z": 20,
+    "area": [[380, 995], [2400, 995], [2500, 1410], [60, 1410], [60, 1190], [380, 1190]],
+    "blocked": [[[1700, 960], [2470, 960], [2470, 1170], [1700, 1070]]],
+    "spots": [
+      { "id": "bench", "at": [700, 1010], "anim": "sit", "seconds": [20, 60], "face": "right", "phases": ["dawn", "day", "dusk"] },
+      { "id": "bench-nap", "at": [620, 1010], "anim": "sleep", "seconds": [120, 300], "phases": ["night"] },
+      { "id": "sea-view", "at": [1260, 1005], "anim": "look", "seconds": [15, 45] },
+      { "id": "table", "at": [1640, 1090], "anim": "think", "seconds": [15, 40], "face": "right" },
+      { "id": "lavender", "at": [430, 1250], "anim": "pat", "seconds": [8, 20], "face": "left", "phases": ["dawn", "day", "dusk"] }
+    ]
+  },
+  "power": { "fps": 24 }
+}

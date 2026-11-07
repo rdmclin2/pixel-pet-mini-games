@@ -20,6 +20,8 @@
 //                     items, quests, lines }  — docs/her-room-design.md §1 in the app repository
 //   illustrated-room@1 (她的房间)  { defaultRoom, activities, rooms: [{ id, character, status, name, states, screens, … }],
 //                     quests }  — tools/illustrated-room-pack.js (a copy of the app's src/core/illustrated-room-pack.js)
+//   wallpaper@1 (壁纸)  kind "wallpaper": { canvas, preview, layers, sky, fx, pet, power }  — tools/wallpaper-pack.js
+//                     (docs/wallpaper-mode.md §3 in the app repository)
 //   <files>         the pictures (.webp / .png) and the sprites indexes (.json) named there; nothing else
 //
 // packFiles(m) lists every file a manifest names (the store refuses any other file in the folder) and
@@ -28,8 +30,9 @@
 //
 // Electron-free and DOM-free (main, the build script and the tests require() it).
 const Illustrated = require('./illustrated-room-pack');
+const Wallpaper = require('./wallpaper-pack');
 
-const ENGINES = ['yard@1', 'room@1', 'illustrated-room@1'];
+const ENGINES = ['yard@1', 'room@1', 'illustrated-room@1', 'wallpaper@1'];
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,63}$/;
 const FILE_RE = /^[a-z0-9][a-z0-9._-]{0,63}\.(webp|png|json)$/;
 const USE_ANIMS = ['idle', 'sit', 'play', 'pat', 'look', 'happy', 'eat', 'sleep', 'think', 'lookAround'];
@@ -73,12 +76,14 @@ function spriteFiles(m) {
   if (!m || typeof m !== 'object') return [];
   if (m.engine === 'room@1') return (Array.isArray(m.themes) ? m.themes : []).map((t) => t && t.sprites).filter((f) => typeof f === 'string');
   if (m.engine === 'illustrated-room@1') return Illustrated.spriteFiles(m);
+  if (m.engine === 'wallpaper@1') return Wallpaper.spriteFiles(m);
   return typeof m.sprites === 'string' ? [m.sprites] : [];
 }
 
 function packFiles(m) {
   if (!m || typeof m !== 'object') return [];
   if (m.engine === 'illustrated-room@1') return Illustrated.namedFiles(m);
+  if (m.engine === 'wallpaper@1') return Wallpaper.namedFiles(m);
   if (m.engine === 'room@1') {
     const out = [];
     for (const t of Array.isArray(m.themes) ? m.themes : []) {
@@ -92,17 +97,21 @@ function packFiles(m) {
 
 // → [error…] (empty = good). `files`: the names in the folder (when checking one on disk), to see every file the
 // manifest names is there. `sprites`: the sprites index (yard) or { <file>: index } (room). `characters`: the
-// character ids a room theme may belong to. `bytes`: the size of manifest.json on disk.
+// character ids a room theme may belong to. `bytes`: the size of manifest.json on disk. `sizes`: { <file>: [w, h] }
+// of the pictures (wallpaper@1 holds its pixel budget with them; Wallpaper.imageSize() reads them from the headers).
 function validateManifest(m, opts = {}) {
   const e = [];
   if (!m || typeof m !== 'object') return ['manifest is not an object'];
   if (m.schema !== 1) e.push('schema must be 1');
-  if (m.kind !== 'game') e.push('kind must be "game"');
+  // a wallpaper is a pack of its own kind: an app without the wallpaper engine never downloads it (game-index supported())
+  const kind = m.engine === 'wallpaper@1' ? 'wallpaper' : 'game';
+  if (m.kind !== kind) e.push(`kind must be "${kind}"${kind === 'wallpaper' ? ' (engine wallpaper@1)' : ''}`);
   if (!ENGINES.includes(m.engine)) e.push(`engine "${m.engine}" is not one this app plays (${ENGINES.join(', ')})`);
   if (!ID_RE.test(String(m.id || ''))) e.push('id must be 3–64 of a-z 0-9 -');
   if (typeof m.name !== 'string' || !m.name.trim()) e.push('name is missing');
   if (typeof m.version !== 'string' || !/^\d+\.\d+\.\d+$/.test(m.version)) e.push('version must be x.y.z');
   if (m.engine === 'illustrated-room@1') return e.concat(Illustrated.validateIllustratedRoom(m, { files: opts.files || null, sprites: opts.sprites || null, fileRe: FILE_RE }));
+  if (m.engine === 'wallpaper@1') return e.concat(Wallpaper.validateWallpaper(m, { files: opts.files || null, sizes: opts.sizes || null, fileRe: FILE_RE }).filter((x) => !/^kind must be/.test(x)));
   if (m.engine === 'room@1') return e.concat(validateRoom(m, opts));
   return e.concat(validateYard(m, opts));
 }
@@ -398,7 +407,17 @@ function checkFolder(dir) {
   const files = fs.readdirSync(dir);
   const sheets = spriteFiles(m);
   const sprites = ['room@1', 'illustrated-room@1'].includes(m.engine) ? Object.fromEntries(sheets.filter((f) => files.includes(f)).map((f) => [f, read(f)]).filter(([, v]) => v)) : (sheets[0] ? read(sheets[0]) : null);
-  const errors = validateManifest(m, { files, sprites, bytes: fs.statSync(path.join(dir, 'manifest.json')).size });
+  const sizes = {};
+  for (const f of packFiles(m)) {
+    if (!files.includes(f) || !/\.(webp|png)$/.test(f) || !fs.lstatSync(path.join(dir, f)).isFile()) continue;
+    const fd = fs.openSync(path.join(dir, f), 'r');
+    const head = Buffer.alloc(64);
+    fs.readSync(fd, head, 0, 64, 0);
+    fs.closeSync(fd);
+    const s = Wallpaper.imageSize(head);
+    if (s) sizes[f] = s;
+  }
+  const errors = validateManifest(m, { files, sprites, sizes, bytes: fs.statSync(path.join(dir, 'manifest.json')).size });
   const named = new Set(['manifest.json', ...packFiles(m)]);
   for (const f of files) {
     if (!fs.lstatSync(path.join(dir, f)).isFile()) errors.push(`${f}: a folder (the app takes flat packs only)`);
@@ -409,7 +428,7 @@ function checkFolder(dir) {
 
 module.exports = {
   ENGINES, ID_RE, FILE_RE, USE_ANIMS, EFFECTS, KINDS, STATS, FX, CHARACTERS,
-  validateManifest, validateYard, validateRoom, packFiles, spriteFiles, walkable, checkFolder,
+  validateManifest, validateYard, validateRoom, validateWallpaper: Wallpaper.validateWallpaper, packFiles, spriteFiles, walkable, checkFolder,
 };
 
 // node tools/game-pack.js <games/<id> | games/<id>/pack> …  → checks each pack folder, exit 1 when one fails
@@ -436,6 +455,15 @@ if (require.main === module) {
         console.log(`     room ${r.id.padEnd(8)} open  ${r.name}  default ${r.defaultState}`);
         for (const [k, st] of Object.entries(r.states)) console.log(`       ${k.padEnd(10)} ${String(st.activity || 'transient').padEnd(9)} ${st.images.off} / ${st.images.lit || '-'}  screens: ${Object.entries(st.screens || {}).map(([id, c]) => `${id}=${c.content}`).join(' ') || '-'}  blink: ${st.blink ? 'yes' : 'no'}`);
       }
+    }
+    if (m.engine === 'wallpaper@1') {
+      console.log(`     canvas ${m.canvas.width}×${m.canvas.height} (${m.canvas.fit || 'cover'}), preview ${m.preview}, power ${m.power && m.power.fps ? `${m.power.fps} fps` : '-'}`);
+      for (const l of [...m.layers].sort((a, b) => a.z - b.z)) {
+        const s = Wallpaper.imageSize(fs.readFileSync(path.join(dir, l.image)));
+        console.log(`     layer z=${String(l.z).padStart(3)} ${l.id.padEnd(14)} ${l.image.padEnd(22)} ${s ? s.join('×') : '?'}  ${l.phases ? l.phases.join('/') : 'all day'}${l.drift ? `  drift ${l.drift}${l.loop ? ' loop' : ''}` : ''}${l.blend && l.blend !== 'normal' ? `  ${l.blend}` : ''}`);
+      }
+      console.log(`     pet z=${m.pet.z ?? 20} height ${m.pet.height}, spawn [${m.pet.spawn}], spots ${(m.pet.spots || []).map((s) => `${s.id}(${s.anim})`).join(' ') || '-'}`);
+      console.log(`     sky ${m.sky ? `phases ${Boolean(m.sky.phases)}, weather ${(m.sky.weather || []).join('/') || '-'}` : '-'}; fx ${m.fx ? Object.keys(m.fx).join('/') : '-'}`);
     }
     if (m.engine === 'room@1') {
       for (const t of m.themes) {
