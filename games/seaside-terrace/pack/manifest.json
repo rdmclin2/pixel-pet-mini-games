@@ -4,7 +4,7 @@
   "engine": "wallpaper@1",
   "id": "seaside-terrace",
   "name": "海边露台",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "海边一座刷白的屋顶露台：赤陶地砖、浅蓝靠垫的长椅、马赛克小圆桌、柠檬树和薰衣草，矮墙外是海和带灯塔的小岛。设为壁纸后她住在露台上，自己散步、坐长椅、靠墙看海，夜里在长椅上睡着；白天晴空和云，夜里星空、月光和灯串。",
   "credit": "美术：GPT Image（gpt-image-2.5）；壁纸引擎：Pixel Pet Affection",
   "canvas": { "width": 2560, "height": 1440, "background": "#2a5d9c", "fit": "cover", "focus": [0.5, 0.7] },

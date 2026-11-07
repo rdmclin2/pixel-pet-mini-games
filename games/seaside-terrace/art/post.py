@@ -3,7 +3,7 @@
 用法（在仓库根目录）：uv run --with pillow --with numpy python3 games/seaside-terrace/art/post.py
 - 天空（sky-day / sky-night）：整张不透明，缩放到画布 2560×1440。
 - 露台（terrace-day / terrace-night）、云（clouds）：原图里天空是纯品红 #FF00FF，抠成透明，边缘去品红溢色。
-- 云：抠出来的云带放到画布上方（天空那一段），左右两边留透明，横向循环时没有接缝。
+- 云：抠出来的云带放到画布上方（天空那一段），按整朵云等间距重排、左右两边自然透明，两份并排横向循环时没有接缝（1.0.0 在 x=160 / 2400 硬切了两朵云，见 CHANGELOG 1.0.1）。
 - 商店图：按 manifest 的图层顺序合成；黄昏图套一层暖色（应用里 sky.tint 做的事），雨图加几道雨丝。
 画面里没有她：她由应用的 wallpaper@1 引擎用角色包的动作画在露台上（pet.area）。
 """
@@ -57,6 +57,32 @@ def key_magenta(img, glow=None):
     return rgba
 
 
+def tile_clouds(band):
+    """云带 → 横向可平铺：按「这一列有没有云」切出一朵朵整云（间隙 ≥ 8px 才算两朵，云里的小碎块跟着它那朵），
+    等间距排开，首尾各留半个间距。返回同宽的云带，左右两列全透明。"""
+    a = np.asarray(band)
+    on = a[..., 3].max(axis=0) > 4
+    runs, x = [], 0
+    while x < len(on):
+        if on[x]:
+            x0 = x
+            while x < len(on) and on[x:x + 8].any():
+                x += 1
+            runs.append((x0, x))
+        x += 1
+    total = sum(x1 - x0 for x0, x1 in runs)
+    gap = (band.size[0] - total) / len(runs)
+    if gap < 24:
+        raise SystemExit(f'clouds too wide to tile: {total}px of clouds in {band.size[0]}px')
+    out = np.zeros_like(a)
+    cx = gap / 2
+    for x0, x1 in runs:
+        at = int(round(cx))
+        out[:, at:at + x1 - x0] = a[:, x0:x1]
+        cx += x1 - x0 + gap
+    return Image.fromarray(out, 'RGBA')
+
+
 def save(img, name, lossless=False):
     p = os.path.join(PACK, name)
     img.save(p, 'WEBP', quality=90, alpha_quality=100, method=6, lossless=lossless, exact=lossless)
@@ -73,16 +99,16 @@ def main():
     sky_day, sky_night = sky(raw('sky-day')), sky(raw('sky-night'))
     terr_day, terr_night = key_magenta(up(raw('terrace-day'))), key_magenta(up(raw('terrace-night')), glow=(255, 206, 128))
 
-    # 云：抠图后取有云的那几行，放到画布 y≈90 处；左右各留 160px 透明，循环不露接缝
+    # 云：抠图后取有云的那几行，放到画布 y≈90 处。原图里五朵云左右互不重叠：按列切成整朵（不切进云里），
+    # 再等间距重新排开，最左、最右各留半个间距的透明——两份并排循环时，接缝处的间距和云之间的一样，看不出接缝
     cl = key_magenta(up(raw('clouds')))
     rows = np.where(np.asarray(cl.getchannel('A')).max(axis=1) > 8)[0]
     band = cl.crop((0, max(0, rows.min() - 8), W, min(H, rows.max() + 8)))
     band = band.resize((W, int(band.size[1] * 0.75)), Image.LANCZOS)
-    a = np.asarray(band).copy()
-    a[:, :160, 3] = 0
-    a[:, -160:, 3] = 0
     clouds = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    clouds.alpha_composite(Image.fromarray(a, 'RGBA'), (0, 90))
+    clouds.alpha_composite(tile_clouds(band), (0, 90))
+    al = np.asarray(clouds.getchannel('A'))
+    assert al[:, 0].max() == 0 and al[:, -1].max() == 0, 'clouds must be transparent at the left / right edge'
 
     save(sky_day, 'sky-day.webp')
     save(sky_night, 'sky-night.webp')
