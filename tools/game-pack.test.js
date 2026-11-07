@@ -22,7 +22,7 @@ const fails = (edit, re) => {
 const room = (m) => m.themes.find((t) => t.id === 'dafeiyu');
 
 test('every pack in the repository passes', () => {
-  for (const id of ['pixel-yard', 'pixel-room', 'her-room']) assert.deepStrictEqual(GP.checkFolder(path.join(ROOT, 'games', id, 'pack')).errors, []);
+  for (const id of ['pixel-yard', 'pixel-room', 'her-room', 'seaside-terrace']) assert.deepStrictEqual(GP.checkFolder(path.join(ROOT, 'games', id, 'pack')).errors, []);
 });
 
 test('pixel-room: one open theme (dafeiyu) and four coming soon', () => {

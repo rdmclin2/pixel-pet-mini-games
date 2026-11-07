@@ -160,6 +160,47 @@
       "bytes": 1183523,
       "sha256": "3ffe6ccb50ea3f916cf825cafbfe551a48514dcf37828efdd8b2f56f454002b3",
       "published": "2026-11-05"
+    },
+    {
+      "id": "seaside-terrace",
+      "type": "game",
+      "name": "海边露台",
+      "version": "1.0.0",
+      "engine": "wallpaper@1",
+      "minAppVersion": "0.29.0",
+      "description": "海边一座刷白的屋顶露台：赤陶地砖、浅蓝靠垫的长椅、马赛克小圆桌、柠檬树和薰衣草，矮墙外是海和带灯塔的小岛。设为壁纸后她住在露台上，自己散步、坐长椅、靠墙看海，夜里在长椅上睡着；白天晴空和云，夜里星空、月光和灯串。",
+      "credit": "美术：GPT Image（gpt-image-2.5）；壁纸引擎：Pixel Pet Affection",
+      "features": [
+        "壁纸：她住在桌面背景里的海边露台上，桌面图标和窗口都在她上面，壁纸点不到她，按 Ctrl+Alt+P 叫她出来",
+        "她自己散步、坐长椅、靠墙看海、在小圆桌边发呆，夜里在长椅上睡着",
+        "时段跟着电脑时钟：白天晴空和慢慢飘过的云，黄昏变暖，夜里星空、月光、灯串和灯塔亮起来；可以下雨",
+        "最高 24 帧，用电池时降帧，被全屏窗口挡住时暂停"
+      ],
+      "repo": "https://github.com/rdmclin2/pixel-pet-mini-games/tree/main/games/seaside-terrace",
+      "picture": "https://raw.githubusercontent.com/rdmclin2/pixel-pet-mini-games/main/games/seaside-terrace/cover.webp",
+      "screenshots": [
+        {
+          "url": "https://raw.githubusercontent.com/rdmclin2/pixel-pet-mini-games/main/games/seaside-terrace/screenshots/01-day.webp",
+          "caption": "白天：晴空、闪着阳光的海和远处的灯塔岛，前面这片地砖就是她散步的地方"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/rdmclin2/pixel-pet-mini-games/main/games/seaside-terrace/screenshots/02-dusk.webp",
+          "caption": "黄昏：整幅画面变暖，云还在慢慢飘"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/rdmclin2/pixel-pet-mini-games/main/games/seaside-terrace/screenshots/03-night.webp",
+          "caption": "夜晚：星空和月光，灯串、桌上的提灯和远处的灯塔都亮着；夜里她会在长椅上睡着"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/rdmclin2/pixel-pet-mini-games/main/games/seaside-terrace/screenshots/04-rain.webp",
+          "caption": "下雨：雨丝斜着落下，灯串的暖光还在"
+        }
+      ],
+      "changelog": "第一版，也是商店里的第一张壁纸：海边一座刷白的屋顶露台，赤陶地砖、浅蓝靠垫的长椅、马赛克小圆桌、柠檬树和薰衣草，远处海平线上有座带灯塔的小岛。设为壁纸后她住在露台上，自己散步、坐长椅、靠在墙边看海，夜里在长椅上睡着；桌面图标和窗口都在她上面，壁纸点不到她，按 Ctrl+Alt+P 叫她出来。白天是晴空和闪着阳光的海，云慢慢飘过；夜里换成星空、月光和亮起来的灯串、灯塔，时段跟着电脑时钟走，可以下雨。需要应用 0.29.0（壁纸引擎 `wallpaper@1`）。",
+      "file": "seaside-terrace-1.0.0.zip",
+      "bytes": 2588911,
+      "sha256": "0d22e06bfa06c3f10f86ae3a9112ce467846434d046c6af69c9a82d53d120efa",
+      "published": "2026-11-07"
     }
   ]
 }
