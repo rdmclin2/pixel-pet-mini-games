@@ -1,8 +1,12 @@
 'use strict';
 // The wallpaper@1 format check, written from the app's design (rdmclin2/lobehub-pixel-pet-affection
-// docs/wallpaper-mode.md §3). The app does not have src/core/wallpaper-pack.js yet: when its wallpaper engine lands,
-// this file is copied there as is (game-pack.js §3.4), and from then on the two are kept in step like game-pack.js —
-// `node scripts/build.js` uses this copy so a pack the app would refuse never gets built.
+// docs/wallpaper-mode.md §3) before the app's engine existed. The app now has its own src/core/wallpaper-pack.js
+// (stricter: canvas / z / speed ranges, forbidden fields such as entry / html / script / url, picture sizes read from
+// the file headers); this copy is NOT byte-identical to it. `node scripts/build.js` uses this copy as a first gate;
+// the authoritative check is the app's: run, from the app checkout,
+//   node scripts/check-store-contract.js <this repository> --cdn
+// which validates every pack with the app's own install check (game-store.js checkFolder) and every catalog entry with
+// its store index (game-index.js), and compares the archives on the CDN (docs/wallpaper-mode.md §9.2).
 //
 // 壁纸包 (wallpaper@1): a live desktop wallpaper she lives in. Data only, like a game pack: one manifest.json plus
 // the layer pictures (.webp / .png) it names — no entry, script, HTML, shader or URL. The engine built into the app

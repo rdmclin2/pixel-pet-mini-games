@@ -29,7 +29,7 @@ catalog.json       商店目录：应用从这里得知有哪些游戏、最新�
 scripts/           build.js（打包）· publish.js（上传 CDN）· game_sprites.py（切图）· generate.sh（生成原图）
 tools/game-pack.js 小游戏包格式校验（与应用一致）：node tools/game-pack.js games/<id>
 tools/illustrated-room-pack.js 她的房间格式校验（应用 src/core/illustrated-room-pack.js 的副本）
-tools/wallpaper-pack.js 壁纸格式校验（wallpaper@1，按应用 docs/wallpaper-mode.md §3 写；应用接入壁纸引擎时原样复制为 src/core/wallpaper-pack.js）· node --test tools/ 跑校验的测试
+tools/wallpaper-pack.js 壁纸格式校验（wallpaper@1，按应用 docs/wallpaper-mode.md §3 写，是打包前的第一道检查；应用的 src/core/wallpaper-pack.js 更严，以它为准：在应用仓库跑 node scripts/check-store-contract.js <本仓库> --cdn）· node --test tools/ 跑校验的测试
 ```
 
 「海边露台」是**壁纸**（`kind: "wallpaper"`、引擎 `wallpaper@1`）：`pack/` 里是 `manifest.json`、`preview.webp` 和几张整幅图层（天空、云、露台，白天和夜里各一套），没有精灵图集；美术源在 `art/`（`prompts.json`、`post.py`，说明见 `art/README.md`）。商店目录里它和小游戏一样是 `type: "game"` 条目，旧版应用不认识这个引擎，会显示「需要更新应用」。格式见应用仓库的 `docs/wallpaper-mode.md` §3。
