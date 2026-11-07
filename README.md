@@ -32,7 +32,7 @@ tools/illustrated-room-pack.js 她的房间格式校验（应用 src/core/illust
 tools/wallpaper-pack.js 壁纸格式校验（wallpaper@1，按应用 docs/wallpaper-mode.md §3 写，是打包前的第一道检查；应用的 src/core/wallpaper-pack.js 更严，以它为准：在应用仓库跑 node scripts/check-store-contract.js <本仓库> --cdn）· node --test tools/ 跑校验的测试
 ```
 
-「海边露台」是**壁纸**（`kind: "wallpaper"`、引擎 `wallpaper@1`）：`pack/` 里是 `manifest.json`、`preview.webp` 和几张整幅图层（天空、云、露台，白天和夜里各一套），没有精灵图集；美术源在 `art/`（`prompts.json`、`post.py`，说明见 `art/README.md`）。商店目录里它和小游戏一样是 `type: "game"` 条目，旧版应用不认识这个引擎，会显示「需要更新应用」。格式见应用仓库的 `docs/wallpaper-mode.md` §3。
+「海边露台」是**壁纸**（`kind: "wallpaper"`、引擎 `wallpaper@1`）：`pack/` 里是 `manifest.json`、`preview.webp` 和几张整幅图层（天空、云、露台，白天和夜里各一套），没有精灵图集；美术源在 `art/`（`prompts.json`、`post.py`，说明见 `art/README.md`）。商店目录里它和小游戏一样是 `type: "game"` 条目，旧版应用不认识这个引擎，会显示「需要更新应用」。格式见应用仓库的 `docs/wallpaper-mode.md` §3。发布步骤（校验 → `node scripts/build.js` → `node scripts/publish.js` → 推送 `catalog.json`）、在应用里安装和设为壁纸、e2e 复现命令见应用仓库 [`docs/wallpaper-mode.md` 的「快速开始」](https://github.com/rdmclin2/lobehub-pixel-pet-affection/blob/feat/t-13651-wallpaper-mode-design/docs/wallpaper-mode.md#快速开始t-13674)。
 
 「像素房间」（`room@1`）的包按主题给文件名加前缀（`dafeiyu-room.webp`、`dafeiyu-atlas.webp`、`dafeiyu-sprites.json`），一个主题一套；`layout.json` 用 `sets` 列出每套，见 `scripts/game_sprites.py` 开头的说明。格式见应用仓库的 `docs/her-room-design.md`。
 
